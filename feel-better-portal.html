@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feel Better — Portal Nutricionista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-50: #f0faf0;
+  --green-100: #dcf2dc;
+  --green-200: #b8e4b8;
+  --green-400: #5cb85c;
+  --green-500: #3d9e3d;
+  --green-600: #2d7a2d;
+  --green-700: #1f581f;
+  --teal-50: #f0faf8;
+  --teal-400: #2ab8a0;
+  --teal-500: #1e9e88;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --amber-50: #fffbeb;
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+  --red-50: #fef2f2;
+  --red-400: #f87171;
+  --red-500: #ef4444;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow: 0 4px 12px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.1), 0 4px 10px rgba(0,0,0,.05);
+  --font-sans: 'DM Sans', sans-serif;
+  --font-serif: 'DM Serif Display', serif;
+  --sidebar-w: 220px;
+  --header-h: 60px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body { font-family: var(--font-sans); background: var(--slate-100); color: var(--slate-800); min-height: 100vh; display: flex; overflow-x: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w); min-height: 100vh; background: var(--slate-900);
+  display: flex; flex-direction: column; position: fixed; left: 0; top: 0; z-index: 100;
+  transition: transform .25s ease;
+}
+.sidebar-logo {
+  padding: 20px 20px 16px; border-bottom: 1px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; gap: 10px;
+}
+.logo-mark {
+  width: 34px; height: 34px; background: var(--green-500); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.logo-mark svg { width: 20px; height: 20px; fill: white; }
+.logo-text { font-family: var(--font-serif); color: white; font-size: 17px; line-height: 1.1; }
+.logo-sub { font-size: 10px; color: var(--slate-400); font-family: var(--font-sans); font-weight: 400; letter-spacing: .04em; }
+.sidebar-nav { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; }
+.nav-section { font-size: 10px; font-weight: 600; color: var(--slate-500); letter-spacing: .08em; text-transform: uppercase; padding: 10px 10px 4px; margin-top: 6px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--radius-sm);
+  cursor: pointer; color: var(--slate-400); font-size: 13px; font-weight: 400;
+  transition: all .15s; position: relative; user-select: none;
+}
+.nav-item:hover { background: rgba(255,255,255,.06); color: white; }
+.nav-item.active { background: var(--green-600); color: white; font-weight: 500; }
+.nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+.nav-badge { margin-left: auto; background: var(--green-500); color: white; font-size: 10px; font-weight: 600; padding: 1px 6px; border-radius: 99px; }
+.sidebar-footer { padding: 14px 10px; border-top: 1px solid rgba(255,255,255,.08); }
+.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--radius-sm); cursor: pointer; }
+.user-row:hover { background: rgba(255,255,255,.06); }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--green-600); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: white; flex-shrink: 0; }
+.user-info .name { font-size: 12px; font-weight: 500; color: white; }
+.user-info .role { font-size: 11px; color: var(--slate-500); }
+
+/* ── MAIN ── */
+.main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+.topbar {
+  height: var(--header-h); background: white; border-bottom: 1px solid var(--slate-200);
+  display: flex; align-items: center; padding: 0 28px; gap: 16px; position: sticky; top: 0; z-index: 50;
+}
+.topbar-title { font-size: 15px; font-weight: 500; color: var(--slate-800); flex: 1; }
+.topbar-title span { color: var(--slate-400); font-weight: 400; margin: 0 6px; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all .15s; font-family: var(--font-sans); }
+.btn-primary { background: var(--green-500); color: white; }
+.btn-primary:hover { background: var(--green-600); }
+.btn-secondary { background: white; color: var(--slate-700); border: 1px solid var(--slate-200); }
+.btn-secondary:hover { background: var(--slate-50); border-color: var(--slate-300); }
+.btn-ghost { background: transparent; color: var(--slate-500); }
+.btn-ghost:hover { background: var(--slate-100); color: var(--slate-700); }
+.btn svg { width: 15px; height: 15px; }
+
+.content { flex: 1; padding: 28px; overflow-y: auto; }
+
+/* ── PAGES ── */
+.page { display: none; animation: fadeIn .2s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── DASHBOARD ── */
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+  background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--slate-200);
+}
+.stat-label { font-size: 12px; color: var(--slate-500); font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.stat-label svg { width: 14px; height: 14px; }
+.stat-value { font-size: 28px; font-weight: 600; color: var(--slate-900); line-height: 1; }
+.stat-sub { font-size: 11px; color: var(--slate-400); margin-top: 4px; }
+.stat-up { color: var(--green-500); font-weight: 500; }
+.stat-card.accent { background: var(--green-500); border-color: var(--green-600); }
+.stat-card.accent .stat-label { color: rgba(255,255,255,.7); }
+.stat-card.accent .stat-value { color: white; }
+.stat-card.accent .stat-sub { color: rgba(255,255,255,.6); }
+
+.dash-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+.card { background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); box-shadow: var(--shadow-sm); }
+.card-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--slate-100); display: flex; align-items: center; justify-content: space-between; }
+.card-title { font-size: 14px; font-weight: 600; color: var(--slate-800); }
+.card-body { padding: 0; }
+
+.client-row {
+  display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+  border-bottom: 1px solid var(--slate-100); cursor: pointer; transition: background .12s;
+}
+.client-row:last-child { border-bottom: none; }
+.client-row:hover { background: var(--slate-50); }
+.client-av { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: white; flex-shrink: 0; }
+.c1 { background: #5c7fd4; } .c2 { background: #d45c7f; } .c3 { background: #7fd45c; color: #1f4d0a; }
+.c4 { background: #d4a05c; } .c5 { background: #5cd4c8; color: #0a3d39; } .c6 { background: #a05cd4; }
+.client-info { flex: 1; }
+.client-name { font-size: 13px; font-weight: 500; color: var(--slate-800); }
+.client-meta { font-size: 11px; color: var(--slate-400); margin-top: 1px; }
+.client-actions { display: flex; align-items: center; gap: 8px; }
+.tag { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 99px; }
+.tag-green { background: var(--green-50); color: var(--green-600); }
+.tag-amber { background: var(--amber-50); color: #92400e; }
+.tag-red { background: var(--red-50); color: #991b1b; }
+.tag-slate { background: var(--slate-100); color: var(--slate-600); }
+.tag-teal { background: var(--teal-50); color: #0f5046; }
+
+.agenda-item {
+  padding: 12px 20px; border-bottom: 1px solid var(--slate-100); display: flex; gap: 12px; align-items: flex-start;
+}
+.agenda-item:last-child { border-bottom: none; }
+.agenda-time { font-size: 12px; font-weight: 600; color: var(--slate-500); width: 44px; flex-shrink: 0; padding-top: 2px; }
+.agenda-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.dot-green { background: var(--green-400); }
+.dot-amber { background: var(--amber-400); }
+.dot-slate { background: var(--slate-300); }
+.agenda-name { font-size: 13px; font-weight: 500; color: var(--slate-800); }
+.agenda-sub { font-size: 11px; color: var(--slate-400); margin-top: 1px; }
+
+/* ── SEARCH PAGE ── */
+.search-hero { background: white; border-radius: var(--radius-xl); padding: 40px; text-align: center; border: 1px solid var(--slate-200); margin-bottom: 24px; }
+.search-hero h2 { font-family: var(--font-serif); font-size: 28px; color: var(--slate-800); margin-bottom: 8px; }
+.search-hero p { font-size: 14px; color: var(--slate-500); margin-bottom: 24px; }
+.search-box { display: flex; gap: 10px; max-width: 480px; margin: 0 auto; }
+.search-input { flex: 1; padding: 11px 16px; border: 1.5px solid var(--slate-200); border-radius: var(--radius); font-size: 14px; font-family: var(--font-sans); color: var(--slate-800); outline: none; transition: border-color .15s; }
+.search-input:focus { border-color: var(--green-400); }
+
+/* ── EXPEDIENTE ── */
+.exp-header { background: white; border-radius: var(--radius-xl); padding: 24px 28px; margin-bottom: 20px; border: 1px solid var(--slate-200); display: flex; align-items: center; gap: 20px; }
+.exp-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--green-100); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 22px; color: var(--green-700); flex-shrink: 0; }
+.exp-name { font-family: var(--font-serif); font-size: 22px; color: var(--slate-900); margin-bottom: 4px; }
+.exp-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.exp-meta { font-size: 12px; color: var(--slate-500); display: flex; gap: 16px; flex-wrap: wrap; }
+.exp-meta span { display: flex; align-items: center; gap: 4px; }
+.exp-actions { margin-left: auto; display: flex; gap: 8px; }
+
+.tabs { display: flex; gap: 2px; background: var(--slate-100); border-radius: var(--radius); padding: 3px; margin-bottom: 20px; width: fit-content; }
+.tab { padding: 7px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; color: var(--slate-500); transition: all .15s; user-select: none; }
+.tab.active { background: white; color: var(--slate-800); box-shadow: var(--shadow-sm); }
+
+.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.three-col-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.section-card { background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 20px; }
+.section-card h3 { font-size: 13px; font-weight: 600; color: var(--slate-600); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+.section-card h3 svg { width: 14px; height: 14px; color: var(--green-500); }
+.field-row { display: flex; flex-direction: column; gap: 2px; margin-bottom: 12px; }
+.field-row:last-child { margin-bottom: 0; }
+.field-label { font-size: 11px; font-weight: 500; color: var(--slate-400); text-transform: uppercase; letter-spacing: .04em; }
+.field-value { font-size: 14px; color: var(--slate-800); }
+
+/* Medidas comparativas */
+.medidas-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.medidas-table th { padding: 8px 12px; text-align: right; font-size: 11px; font-weight: 600; color: var(--slate-500); letter-spacing: .03em; border-bottom: 1px solid var(--slate-100); }
+.medidas-table th:first-child { text-align: left; }
+.medidas-table td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--slate-50); color: var(--slate-700); }
+.medidas-table td:first-child { text-align: left; font-weight: 500; color: var(--slate-600); }
+.medidas-table tr:last-child td { border-bottom: none; }
+.medidas-table .col-meta { color: var(--slate-400); font-size: 12px; }
+.medidas-table .col-actual { color: var(--slate-900); font-weight: 600; }
+.delta-pos { color: var(--green-500); font-size: 11px; font-weight: 600; }
+.delta-neg { color: var(--red-500); font-size: 11px; font-weight: 600; }
+.col-header-meta { background: var(--slate-50); }
+.col-header-actual { background: var(--green-50); color: var(--green-700) !important; }
+
+/* Plan alimenticio */
+.plan-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.plan-table th { padding: 8px 10px; background: var(--slate-50); font-size: 11px; font-weight: 600; color: var(--slate-500); letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--slate-200); text-align: left; }
+.plan-table td { padding: 10px; border-bottom: 1px solid var(--slate-100); vertical-align: top; color: var(--slate-700); line-height: 1.4; }
+.plan-table td:first-child { font-weight: 600; color: var(--slate-500); font-size: 11px; width: 36px; background: var(--slate-50); text-align: center; border-right: 1px solid var(--slate-100); }
+.plan-table tr:last-child td { border-bottom: none; }
+.plan-table tr:hover td { background: var(--green-50); }
+.plan-table tr:hover td:first-child { background: var(--green-50); }
+
+/* Historial consultas */
+.consulta-row {
+  display: flex; align-items: center; gap: 16px; padding: 14px 20px;
+  border-bottom: 1px solid var(--slate-100); cursor: pointer; transition: background .12s;
+}
+.consulta-row:last-child { border-bottom: none; }
+.consulta-row:hover { background: var(--slate-50); }
+.consulta-num { font-size: 12px; font-weight: 700; color: var(--slate-400); font-family: monospace; width: 80px; }
+.consulta-info { flex: 1; }
+.consulta-fecha { font-size: 13px; font-weight: 500; color: var(--slate-800); }
+.consulta-sub { font-size: 11px; color: var(--slate-400); margin-top: 2px; }
+.consulta-delta { font-size: 12px; color: var(--slate-500); text-align: right; min-width: 80px; }
+.consulta-delta .delta { font-size: 13px; font-weight: 600; }
+
+/* ── NUEVA CONSULTA — WIZARD ── */
+.wizard-header { background: white; border-radius: var(--radius-xl); padding: 24px 28px; margin-bottom: 20px; border: 1px solid var(--slate-200); }
+.wizard-steps { display: flex; align-items: center; gap: 0; }
+.wstep { display: flex; align-items: center; gap: 8px; flex: 1; }
+.wstep:last-child { flex: 0; }
+.wstep-circle {
+  width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; transition: all .2s;
+}
+.wstep-circle.done { background: var(--green-500); color: white; }
+.wstep-circle.current { background: var(--slate-800); color: white; box-shadow: 0 0 0 4px var(--slate-200); }
+.wstep-circle.pending { background: var(--slate-100); color: var(--slate-400); }
+.wstep-label { font-size: 12px; font-weight: 500; white-space: nowrap; }
+.wstep-label.done { color: var(--green-600); }
+.wstep-label.current { color: var(--slate-800); }
+.wstep-label.pending { color: var(--slate-400); }
+.wstep-line { flex: 1; height: 1px; background: var(--slate-200); margin: 0 8px; min-width: 20px; }
+.wstep-line.done { background: var(--green-400); }
+
+.form-section { background: white; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); padding: 24px; margin-bottom: 16px; }
+.form-section h3 { font-size: 14px; font-weight: 600; color: var(--slate-700); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--slate-100); display: flex; align-items: center; gap: 8px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label { font-size: 11px; font-weight: 600; color: var(--slate-500); text-transform: uppercase; letter-spacing: .04em; }
+.form-input, .form-select, .form-textarea {
+  padding: 9px 12px; border: 1.5px solid var(--slate-200); border-radius: var(--radius-sm);
+  font-size: 13px; font-family: var(--font-sans); color: var(--slate-800); outline: none;
+  transition: border-color .15s; background: white;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--green-400); }
+.form-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.radio-group { display: flex; gap: 12px; }
+.radio-opt { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; color: var(--slate-700); }
+.radio-opt input { accent-color: var(--green-500); }
+
+.medidas-form-grid { display: grid; grid-template-columns: 160px 1fr 1fr 1fr; gap: 1px; background: var(--slate-200); border-radius: var(--radius); overflow: hidden; }
+.mfg-header { background: var(--slate-50); padding: 8px 12px; font-size: 11px; font-weight: 600; color: var(--slate-500); text-transform: uppercase; letter-spacing: .04em; }
+.mfg-label { background: white; padding: 10px 12px; font-size: 13px; font-weight: 500; color: var(--slate-600); display: flex; align-items: center; }
+.mfg-cell { background: white; padding: 6px 8px; }
+.mfg-cell.meta { background: var(--slate-50); }
+.mfg-cell input { width: 100%; padding: 6px 8px; border: 1.5px solid var(--slate-200); border-radius: var(--radius-sm); font-size: 13px; font-family: var(--font-sans); outline: none; background: transparent; }
+.mfg-cell input:focus { border-color: var(--green-400); background: white; }
+.mfg-cell.meta input { color: var(--slate-400); background: var(--slate-50); }
+
+.plan-form-table { width: 100%; border-collapse: collapse; }
+.plan-form-table th { padding: 8px 10px; background: var(--slate-50); font-size: 11px; font-weight: 600; color: var(--slate-500); letter-spacing: .04em; text-transform: uppercase; border-bottom: 1px solid var(--slate-200); text-align: left; }
+.plan-form-table td { padding: 5px; border-bottom: 1px solid var(--slate-100); }
+.plan-form-table td:first-child { padding: 5px 10px; font-weight: 600; color: var(--slate-500); font-size: 11px; background: var(--slate-50); border-right: 1px solid var(--slate-100); text-align: center; width: 36px; }
+.plan-form-table input { width: 100%; padding: 7px 8px; border: 1.5px solid var(--slate-100); border-radius: var(--radius-sm); font-size: 12px; font-family: var(--font-sans); outline: none; color: var(--slate-700); }
+.plan-form-table input:focus { border-color: var(--green-400); background: var(--green-50); }
+
+.form-nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 0 0; }
+.step-indicator { font-size: 12px; color: var(--slate-400); }
+
+/* ── ALERTS ── */
+.alert-row { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; border-radius: var(--radius); font-size: 13px; margin-bottom: 10px; }
+.alert-amber { background: var(--amber-50); border: 1px solid #fde68a; color: #92400e; }
+.alert-green { background: var(--green-50); border: 1px solid var(--green-200); color: var(--green-700); }
+.alert-row svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; background: var(--slate-900); color: white;
+  padding: 12px 18px; border-radius: var(--radius); font-size: 13px; font-weight: 500;
+  box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 10px;
+  transform: translateY(80px); opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  z-index: 999; pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast svg { width: 16px; height: 16px; color: var(--green-400); }
+
+/* ── EMPTY STATE ── */
+.empty-state { text-align: center; padding: 60px 20px; }
+.empty-state svg { width: 48px; height: 48px; color: var(--slate-300); margin: 0 auto 12px; }
+.empty-state h3 { font-size: 15px; font-weight: 600; color: var(--slate-600); margin-bottom: 6px; }
+.empty-state p { font-size: 13px; color: var(--slate-400); }
+
+/* ── MINI CHART ── */
+.mini-chart { display: flex; align-items: flex-end; gap: 3px; height: 40px; }
+.mini-bar { flex: 1; border-radius: 3px 3px 0 0; transition: opacity .15s; background: var(--green-200); }
+.mini-bar:hover { opacity: .7; }
+.mini-bar.highlight { background: var(--green-500); }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 99px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 2.5 1.2 4.7 3 6.1V18h8v-2.9c1.8-1.4 3-3.6 3-6.1 0-4-3-7-7-7zm-1 14v2h2v-2h-2z"/></svg>
+    </div>
+    <div>
+      <div class="logo-text">Feel Better</div>
+      <div class="logo-sub">Nutrición</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" onclick="showPage('dashboard', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('clientes', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Clientes
+      <span class="nav-badge">24</span>
+    </div>
+    <div class="nav-item" onclick="showPage('nueva', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Nueva consulta
+    </div>
+    <div class="nav-section">Herramientas</div>
+    <div class="nav-item" onclick="showPage('agenda', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Agenda
+    </div>
+    <div class="nav-item" onclick="showToast('Módulo de reportes próximamente')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Reportes
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-row">
+      <div class="avatar">GF</div>
+      <div class="user-info">
+        <div class="name">Guillermo Flores</div>
+        <div class="role">Nutricionista</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- ── DASHBOARD ── -->
+  <div id="page-dashboard" class="page active">
+    <div class="topbar">
+      <div class="topbar-title">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" onclick="showPage('clientes', document.querySelector('.nav-item:nth-child(3)'))">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Buscar cliente
+        </button>
+        <button class="btn btn-primary" onclick="showPage('nueva', document.querySelectorAll('.nav-item')[2])">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nueva consulta
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="stats-row">
+        <div class="stat-card accent">
+          <div class="stat-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Clientes activos
+          </div>
+          <div class="stat-value">24</div>
+          <div class="stat-sub">+3 este mes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Consultas este mes
+          </div>
+          <div class="stat-value">18</div>
+          <div class="stat-sub"><span class="stat-up">↑ 4</span> vs mes anterior</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Clientes en meta
+          </div>
+          <div class="stat-value">71%</div>
+          <div class="stat-sub">17 de 24 activos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Próximas citas
+          </div>
+          <div class="stat-value">5</div>
+          <div class="stat-sub">Esta semana</div>
+        </div>
+      </div>
+
+      <div class="alert-row alert-amber">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span><strong>2 clientes</strong> no han registrado actividad en la app en más de 7 días — María García y Carlos Mendoza.</span>
+      </div>
+
+      <div class="dash-grid">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Clientes recientes</span>
+            <button class="btn btn-ghost" style="font-size:12px" onclick="showPage('clientes', document.querySelectorAll('.nav-item')[1])">Ver todos →</button>
+          </div>
+          <div class="card-body">
+            <div class="client-row" onclick="showExpediente()">
+              <div class="client-av c1">JG</div>
+              <div class="client-info">
+                <div class="client-name">Jorge Orlando Gómez</div>
+                <div class="client-meta">DUI 04599254 · Última consulta 28/05/2024</div>
+              </div>
+              <div class="client-actions">
+                <span class="tag tag-green">En meta</span>
+                <span class="tag tag-teal">App activa</span>
+              </div>
+            </div>
+            <div class="client-row">
+              <div class="client-av c2">MG</div>
+              <div class="client-info">
+                <div class="client-name">María Elena García</div>
+                <div class="client-meta">DUI 07823419 · Última consulta 15/05/2024</div>
+              </div>
+              <div class="client-actions">
+                <span class="tag tag-amber">Sin app</span>
+              </div>
+            </div>
+            <div class="client-row">
+              <div class="client-av c4">RL</div>
+              <div class="client-info">
+                <div class="client-name">Rosa Amelia López</div>
+                <div class="client-meta">DUI 03241788 · Última consulta 20/05/2024</div>
+              </div>
+              <div class="client-actions">
+                <span class="tag tag-green">En meta</span>
+                <span class="tag tag-teal">App activa</span>
+              </div>
+            </div>
+            <div class="client-row">
+              <div class="client-av c5">CM</div>
+              <div class="client-info">
+                <div class="client-name">Carlos Enrique Mendoza</div>
+                <div class="client-meta">DUI 09182734 · Última consulta 10/05/2024</div>
+              </div>
+              <div class="client-actions">
+                <span class="tag tag-red">Sin registro</span>
+              </div>
+            </div>
+            <div class="client-row">
+              <div class="client-av c6">AS</div>
+              <div class="client-info">
+                <div class="client-name">Ana Sofía Sánchez</div>
+                <div class="client-meta">DUI 05674321 · Primera consulta</div>
+              </div>
+              <div class="client-actions">
+                <span class="tag tag-slate">Nueva</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Agenda de hoy</span></div>
+          <div class="card-body">
+            <div class="agenda-item">
+              <div class="agenda-time">9:00</div>
+              <div class="agenda-dot dot-green"></div>
+              <div>
+                <div class="agenda-name">Jorge Gómez</div>
+                <div class="agenda-sub">Seguimiento mensual · Completada</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-time">10:30</div>
+              <div class="agenda-dot dot-green"></div>
+              <div>
+                <div class="agenda-name">Rosa López</div>
+                <div class="agenda-sub">Control de peso · Completada</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-time">2:00</div>
+              <div class="agenda-dot dot-amber"></div>
+              <div>
+                <div class="agenda-name">Ana Sánchez</div>
+                <div class="agenda-sub">Primera consulta · En espera</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-time">4:00</div>
+              <div class="agenda-dot dot-amber"></div>
+              <div>
+                <div class="agenda-name">Luis Martínez</div>
+                <div class="agenda-sub">Seguimiento · Pendiente</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-time">5:30</div>
+              <div class="agenda-dot dot-slate"></div>
+              <div>
+                <div class="agenda-name">Slot disponible</div>
+                <div class="agenda-sub">Sin asignar</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CLIENTES / BÚSQUEDA ── -->
+  <div id="page-clientes" class="page">
+    <div class="topbar">
+      <div class="topbar-title">Clientes</div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="showPage('nueva', document.querySelectorAll('.nav-item')[2])">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nueva consulta
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="search-hero">
+        <h2>Buscar cliente</h2>
+        <p>Ingresa el DUI o nombre del cliente para acceder a su expediente</p>
+        <div class="search-box">
+          <input class="search-input" placeholder="DUI o nombre del cliente..." id="searchInput" oninput="filterClients(this.value)">
+          <button class="btn btn-primary" onclick="showExpediente()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Buscar
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Todos los clientes</span>
+          <span style="font-size:12px;color:var(--slate-400)">24 clientes</span>
+        </div>
+        <div class="card-body" id="clientList">
+          <div class="client-row" onclick="showExpediente()">
+            <div class="client-av c1">JG</div>
+            <div class="client-info">
+              <div class="client-name">Jorge Orlando Gómez Márquez</div>
+              <div class="client-meta">DUI 04599254 · 32 años · Masculino</div>
+            </div>
+            <div class="client-actions">
+              <span class="tag tag-green">Activo</span>
+              <button class="btn btn-secondary" style="font-size:12px;padding:5px 10px" onclick="event.stopPropagation();showExpediente()">Ver expediente</button>
+            </div>
+          </div>
+          <div class="client-row">
+            <div class="client-av c2">MG</div>
+            <div class="client-info">
+              <div class="client-name">María Elena García Flores</div>
+              <div class="client-meta">DUI 07823419 · 28 años · Femenino</div>
+            </div>
+            <div class="client-actions">
+              <span class="tag tag-amber">Sin app</span>
+              <button class="btn btn-secondary" style="font-size:12px;padding:5px 10px" onclick="event.stopPropagation()">Ver expediente</button>
+            </div>
+          </div>
+          <div class="client-row">
+            <div class="client-av c4">RL</div>
+            <div class="client-info">
+              <div class="client-name">Rosa Amelia López Vásquez</div>
+              <div class="client-meta">DUI 03241788 · 45 años · Femenino</div>
+            </div>
+            <div class="client-actions">
+              <span class="tag tag-green">Activo</span>
+              <button class="btn btn-secondary" style="font-size:12px;padding:5px 10px" onclick="event.stopPropagation()">Ver expediente</button>
+            </div>
+          </div>
+          <div class="client-row">
+            <div class="client-av c5">CM</div>
+            <div class="client-info">
+              <div class="client-name">Carlos Enrique Mendoza Rivas</div>
+              <div class="client-meta">DUI 09182734 · 38 años · Masculino</div>
+            </div>
+            <div class="client-actions">
+              <span class="tag tag-red">Inactivo</span>
+              <button class="btn btn-secondary" style="font-size:12px;padding:5px 10px" onclick="event.stopPropagation()">Ver expediente</button>
+            </div>
+          </div>
+          <div class="client-row">
+            <div class="client-av c6">AS</div>
+            <div class="client-info">
+              <div class="client-name">Ana Sofía Sánchez Pérez</div>
+              <div class="client-meta">DUI 05674321 · 24 años · Femenino</div>
+            </div>
+            <div class="client-actions">
+              <span class="tag tag-slate">Nueva</span>
+              <button class="btn btn-secondary" style="font-size:12px;padding:5px 10px" onclick="event.stopPropagation()">Ver expediente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXPEDIENTE ── -->
+  <div id="page-expediente" class="page">
+    <div class="topbar">
+      <div class="topbar-title">Clientes <span>›</span> Jorge Gómez</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" onclick="showPage('clientes', document.querySelectorAll('.nav-item')[1])">← Volver</button>
+        <button class="btn btn-primary" onclick="showPage('nueva', document.querySelectorAll('.nav-item')[2])">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nueva consulta
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="exp-header">
+        <div class="exp-avatar">JG</div>
+        <div>
+          <div class="exp-name">Jorge Orlando Gómez Márquez</div>
+          <div class="exp-tags">
+            <span class="tag tag-green">Activo</span>
+            <span class="tag tag-teal">App conectada</span>
+            <span class="tag tag-slate">3 consultas</span>
+          </div>
+          <div class="exp-meta">
+            <span>📋 DUI 04599254</span>
+            <span>🎂 11/07/1992 · 32 años</span>
+            <span>📱 2205-7777</span>
+            <span>✉️ jorge@gmail.com</span>
+            <span>💍 Soltero</span>
+          </div>
+        </div>
+        <div class="exp-actions">
+          <button class="btn btn-secondary" onclick="showToast('Resumen de cita enviado por correo')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Enviar resumen
+          </button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('tab-medidas', this)">Medidas y evolución</div>
+        <div class="tab" onclick="switchTab('tab-historial', this)">Historial de consultas</div>
+        <div class="tab" onclick="switchTab('tab-plan', this)">Plan alimenticio</div>
+        <div class="tab" onclick="switchTab('tab-clinico', this)">Historia clínica</div>
+      </div>
+
+      <!-- TAB MEDIDAS -->
+      <div id="tab-medidas">
+        <div class="alert-row alert-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          El cliente ha perdido <strong>5 kg</strong> en 3 consultas y está a 1 kg de su meta de 85 kg. ¡Excelente progreso!
+        </div>
+        <div class="section-card" style="margin-bottom:16px">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Evolución de medidas — 3 consultas
+          </h3>
+          <table class="medidas-table">
+            <thead>
+              <tr>
+                <th>Medida</th>
+                <th class="col-header-meta">Meta</th>
+                <th class="col-header-meta">S-2 (28/04)</th>
+                <th class="col-header-meta">S-1 (28/05)</th>
+                <th class="col-header-actual">Actual (28/06)</th>
+                <th>Δ S-1→Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Peso (kg)</td><td class="col-meta">85</td><td class="col-meta">95</td><td class="col-meta">94</td><td class="col-actual">90</td><td><span class="delta-pos">▼ 4 kg</span></td></tr>
+              <tr><td>Talla (m)</td><td class="col-meta">—</td><td class="col-meta">1.85</td><td class="col-meta">1.85</td><td class="col-actual">1.85</td><td>—</td></tr>
+              <tr><td>Cintura (cm)</td><td class="col-meta">80</td><td class="col-meta">95</td><td class="col-meta">92</td><td class="col-actual">88</td><td><span class="delta-pos">▼ 4 cm</span></td></tr>
+              <tr><td>Cadera (cm)</td><td class="col-meta">90</td><td class="col-meta">102</td><td class="col-meta">100</td><td class="col-actual">97</td><td><span class="delta-pos">▼ 3 cm</span></td></tr>
+              <tr><td>Brazo (cm)</td><td class="col-meta">30</td><td class="col-meta">35</td><td class="col-meta">33</td><td class="col-actual">32</td><td><span class="delta-pos">▼ 1 cm</span></td></tr>
+              <tr><td>Pecho (cm)</td><td class="col-meta">90</td><td class="col-meta">100</td><td class="col-meta">98</td><td class="col-actual">95</td><td><span class="delta-pos">▼ 3 cm</span></td></tr>
+              <tr><td>Muslo (cm)</td><td class="col-meta">50</td><td class="col-meta">58</td><td class="col-meta">56</td><td class="col-actual">54</td><td><span class="delta-pos">▼ 2 cm</span></td></tr>
+              <tr><td>IMC</td><td class="col-meta">24.8</td><td class="col-meta">27.7</td><td class="col-meta">27.4</td><td class="col-actual">26.3</td><td><span class="delta-pos">▼ 1.1</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB HISTORIAL -->
+      <div id="tab-historial" style="display:none">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Historial de consultas</span></div>
+          <div class="card-body">
+            <div class="consulta-row" onclick="showToast('Abriendo consulta 00000003...')">
+              <div class="consulta-num">#00000003</div>
+              <div class="consulta-info">
+                <div class="consulta-fecha">28 de junio, 2024 — 9:47 a.m.</div>
+                <div class="consulta-sub">Seguimiento · Guillermo Flores · Completa</div>
+              </div>
+              <div><span class="tag tag-green">Completa</span></div>
+              <div class="consulta-delta">
+                <div class="delta delta-pos">▼ 4 kg</div>
+                <div style="font-size:11px;color:var(--slate-400)">desde anterior</div>
+              </div>
+            </div>
+            <div class="consulta-row" onclick="showToast('Abriendo consulta 00000002...')">
+              <div class="consulta-num">#00000002</div>
+              <div class="consulta-info">
+                <div class="consulta-fecha">28 de mayo, 2024 — 9:47 a.m.</div>
+                <div class="consulta-sub">Seguimiento · Guillermo Flores · Completa</div>
+              </div>
+              <div><span class="tag tag-green">Completa</span></div>
+              <div class="consulta-delta">
+                <div class="delta delta-pos">▼ 1 kg</div>
+                <div style="font-size:11px;color:var(--slate-400)">desde anterior</div>
+              </div>
+            </div>
+            <div class="consulta-row" onclick="showToast('Abriendo consulta 00000001...')">
+              <div class="consulta-num">#00000001</div>
+              <div class="consulta-info">
+                <div class="consulta-fecha">28 de abril, 2024 — 2:15 p.m.</div>
+                <div class="consulta-sub">Primera consulta · Guillermo Flores · Completa</div>
+              </div>
+              <div><span class="tag tag-slate">Inicial</span></div>
+              <div class="consulta-delta">
+                <div class="delta" style="color:var(--slate-500)">95 kg</div>
+                <div style="font-size:11px;color:var(--slate-400)">peso inicial</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB PLAN -->
+      <div id="tab-plan" style="display:none">
+        <div class="section-card">
+          <h3>Plan alimenticio actual — junio 2024</h3>
+          <table class="plan-table">
+            <thead><tr><th></th><th>Desayuno</th><th>Almuerzo</th><th>Cena</th><th>Meriendas</th></tr></thead>
+            <tbody>
+              <tr><td>L</td><td>Avena con frutas y semillas de chía, vaso de agua</td><td>Arroz integral, pechuga a la plancha, ensalada verde</td><td>Sopa de verduras, tortilla integral</td><td>Manzana, nueces</td></tr>
+              <tr><td>Ma</td><td>Huevos revueltos (2), pan integral, jugo natural</td><td>Frijoles negros, tortillas, pollo asado, aguacate</td><td>Ensalada de atún, pan integral</td><td>Yogur natural sin azúcar</td></tr>
+              <tr><td>Mi</td><td>Yogur con granola sin azúcar, berries</td><td>Pasta integral, res a la plancha, brócoli al vapor</td><td>Caldo de pollo, vegetales</td><td>Zanahoria con hummus</td></tr>
+              <tr><td>J</td><td>Avena con platano y miel, café negro</td><td>Arroz integral, lentejas, pollo al horno</td><td>Sopa de frijoles, tortilla integral</td><td>Pepino con limón</td></tr>
+              <tr><td>V</td><td>Licuado de espinaca, mango y proteína</td><td>Pescado a la plancha, arroz integral, ensalada</td><td>Tacos de lechuga con pavo</td><td>Fresas naturales</td></tr>
+              <tr><td>S</td><td>Panqueques de avena (2), miel pura</td><td>Pollo a la naranja, arroz, vegetales salteados</td><td>Pizza integral casera, ensalada</td><td>Palomitas de maíz sin mantequilla</td></tr>
+              <tr><td>D</td><td>Huevos benedictinos con pan integral</td><td>Res estofada, puré de papa, vegetales</td><td>Caldo tlalpeño light</td><td>Rebanada de melón</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB CLINICO -->
+      <div id="tab-clinico" style="display:none">
+        <div class="two-col-grid">
+          <div class="section-card">
+            <h3>Antecedentes</h3>
+            <div class="field-row"><div class="field-label">Enfermedades crónicas</div><div class="field-value">No por el momento</div></div>
+            <div class="field-row"><div class="field-label">Enfermedades no crónicas</div><div class="field-value">Asma leve</div></div>
+            <div class="field-row"><div class="field-label">Tratamiento médico</div><div class="field-value">Terapias de oxígeno ocasionales</div></div>
+          </div>
+          <div class="section-card">
+            <h3>Estilo de vida</h3>
+            <div class="field-row"><div class="field-label">Rutina de sueño</div><div class="field-value">Duerme entre 11pm y 7am, no definido</div></div>
+            <div class="field-row"><div class="field-label">Actividad física</div><div class="field-value">Moderada — caminatas 2-3 veces/semana</div></div>
+            <div class="field-row"><div class="field-label">Intolerancias</div><div class="field-value">Intolerante a la lactosa</div></div>
+            <div class="field-row"><div class="field-label">Alimentos no gustados</div><div class="field-value">No consume mariscos</div></div>
+            <div class="field-row"><div class="field-label">Fuma / Alcohol</div><div class="field-value">No fuma · Sí consume alcohol</div></div>
+          </div>
+        </div>
+        <div class="section-card">
+          <h3>Dieta actual (referencia inicial)</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--slate-500);margin-bottom:8px">Días de semana</div>
+              <div class="field-row"><div class="field-label">Desayuno</div><div class="field-value">Café con leche, pan con frijoles</div></div>
+              <div class="field-row"><div class="field-label">Almuerzo</div><div class="field-value">Arroz, frijoles, pollo, tortillas</div></div>
+              <div class="field-row"><div class="field-label">Cena</div><div class="field-value">Sopa o recalentado</div></div>
+              <div class="field-row"><div class="field-label">Refrigerios</div><div class="field-value">Frutas, a veces snacks</div></div>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--slate-500);margin-bottom:8px">Fines de semana</div>
+              <div class="field-row"><div class="field-label">Desayuno</div><div class="field-value">Huevos con plátano frito</div></div>
+              <div class="field-row"><div class="field-label">Almuerzo</div><div class="field-value">Comida familiar, pupusas</div></div>
+              <div class="field-row"><div class="field-label">Cena</div><div class="field-value">Variado, más libre</div></div>
+              <div class="field-row"><div class="field-label">Refrigerios</div><div class="field-value">Más frecuente que entre semana</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NUEVA CONSULTA — WIZARD ── -->
+  <div id="page-nueva" class="page">
+    <div class="topbar">
+      <div class="topbar-title">Nueva consulta</div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost" onclick="showPage('dashboard', document.querySelector('.nav-item'))">Cancelar</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="wizard-header">
+        <div class="wizard-steps" id="wizardSteps">
+          <!-- se genera por JS -->
+        </div>
+      </div>
+      <div id="wizardContent"></div>
+      <div class="form-nav">
+        <button class="btn btn-secondary" id="btnPrev" onclick="wizardPrev()" style="display:none">← Anterior</button>
+        <span class="step-indicator" id="stepIndicator"></span>
+        <button class="btn btn-primary" id="btnNext" onclick="wizardNext()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AGENDA ── -->
+  <div id="page-agenda" class="page">
+    <div class="topbar">
+      <div class="topbar-title">Agenda — Junio 2024</div>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="showToast('Función de nueva cita próximamente')">+ Nueva cita</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Esta semana</span></div>
+        <div class="card-body">
+          <div class="agenda-item"><div class="agenda-time">Lun</div><div class="agenda-dot dot-green"></div><div><div class="agenda-name">Jorge Gómez — 9:00 am</div><div class="agenda-sub">Seguimiento mensual · Completada</div></div></div>
+          <div class="agenda-item"><div class="agenda-time">Lun</div><div class="agenda-dot dot-green"></div><div><div class="agenda-name">Rosa López — 10:30 am</div><div class="agenda-sub">Control de peso · Completada</div></div></div>
+          <div class="agenda-item"><div class="agenda-time">Mar</div><div class="agenda-dot dot-amber"></div><div><div class="agenda-name">Ana Sánchez — 2:00 pm</div><div class="agenda-sub">Primera consulta · Pendiente</div></div></div>
+          <div class="agenda-item"><div class="agenda-time">Mié</div><div class="agenda-dot dot-amber"></div><div><div class="agenda-name">Luis Martínez — 4:00 pm</div><div class="agenda-sub">Seguimiento · Pendiente</div></div></div>
+          <div class="agenda-item"><div class="agenda-time">Jue</div><div class="agenda-dot dot-slate"></div><div><div class="agenda-name">Slot libre — todo el día</div><div class="agenda-sub">Sin citas agendadas</div></div></div>
+          <div class="agenda-item"><div class="agenda-time">Vie</div><div class="agenda-dot dot-amber"></div><div><div class="agenda-name">María García — 11:00 am</div><div class="agenda-sub">Control mensual · Pendiente</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+const steps = [
+  {
+    id: 'datos', label: 'Datos personales',
+    html: `<div class="form-section"><h3>👤 Datos personales del cliente</h3><div class="form-grid">
+      <div class="form-group"><label>DUI</label><input class="form-input" value="04599254" placeholder="00000000-0"></div>
+      <div class="form-group"><label>Primer nombre</label><input class="form-input" value="Jorge"></div>
+      <div class="form-group"><label>Segundo nombre</label><input class="form-input" value="Orlando"></div>
+      <div class="form-group"><label>Primer apellido</label><input class="form-input" value="Gómez"></div>
+      <div class="form-group"><label>Segundo apellido</label><input class="form-input" value="Márquez"></div>
+      <div class="form-group"><label>Fecha de nacimiento</label><input class="form-input" type="date" value="1992-07-11"></div>
+      <div class="form-group"><label>Número de contacto</label><input class="form-input" value="2205-7777"></div>
+      <div class="form-group"><label>Sexo</label><select class="form-select"><option>Masculino</option><option>Femenino</option></select></div>
+      <div class="form-group"><label>Correo electrónico</label><input class="form-input" value="jorge@gmail.com" type="email"></div>
+      <div class="form-group"><label>Estado civil</label><select class="form-select"><option>Soltero</option><option>Casado</option><option>Otro</option></select></div>
+    </div></div>`
+  },
+  {
+    id: 'antecedentes', label: 'Antecedentes',
+    html: `<div class="form-section"><h3>🏥 Antecedentes de enfermedades</h3><div class="form-grid">
+      <div class="form-group full"><label>¿Ha padecido o padece alguna enfermedad crónica?</label><textarea class="form-textarea" placeholder="Ej: Diabetes, hipertensión, hipotiroidismo...">No por el momento</textarea></div>
+      <div class="form-group full"><label>¿Padece alguna otra enfermedad no crónica?</label><textarea class="form-textarea">Asma leve</textarea></div>
+      <div class="form-group full"><label>¿Ha recibido o se encuentra recibiendo algún tratamiento médico?</label><textarea class="form-textarea">Terapias de oxígeno ocasionales</textarea></div>
+    </div></div>`
+  },
+  {
+    id: 'lifestyle', label: 'Estilo de vida',
+    html: `<div class="form-section"><h3>🌿 Estilo de vida</h3><div class="form-grid">
+      <div class="form-group full"><label>Rutina de sueño</label><textarea class="form-textarea" rows="2">Duerme entre 11pm y 7am, no definido</textarea></div>
+      <div class="form-group full"><label>Actividad física</label><textarea class="form-textarea" rows="2">Moderada, caminatas dos a tres veces por semana</textarea></div>
+      <div class="form-group"><label>Intolerancias alimentarias</label><input class="form-input" value="Intolerante a la lactosa"></div>
+      <div class="form-group"><label>Alimentos que no le gustan</label><input class="form-input" value="No consume mariscos"></div>
+      <div class="form-group"><label>¿Fuma?</label><div class="radio-group"><label class="radio-opt"><input type="radio" name="fuma" value="si"> Sí</label><label class="radio-opt"><input type="radio" name="fuma" value="no" checked> No</label></div></div>
+      <div class="form-group"><label>¿Consume alcohol?</label><div class="radio-group"><label class="radio-opt"><input type="radio" name="alcohol" value="si" checked> Sí</label><label class="radio-opt"><input type="radio" name="alcohol" value="no"> No</label></div></div>
+    </div></div>
+    <div class="form-section"><h3>🍽 Dieta actual</h3>
+    <div style="display:grid;grid-template-columns:80px 1fr 1fr;gap:1px;background:var(--slate-200);border-radius:var(--radius);overflow:hidden;font-size:13px">
+      <div style="background:var(--slate-50);padding:8px 12px;font-size:11px;font-weight:600;color:var(--slate-500)"></div>
+      <div style="background:var(--slate-50);padding:8px 12px;font-size:11px;font-weight:600;color:var(--slate-500)">Días de semana</div>
+      <div style="background:var(--slate-50);padding:8px 12px;font-size:11px;font-weight:600;color:var(--slate-500)">Fines de semana</div>
+      ${['Desayuno','Almuerzo','Cena','Refrigerios','Líquidos'].map((t,i) => `
+      <div style="background:white;padding:8px 12px;font-weight:500;color:var(--slate-600);border-top:1px solid var(--slate-100)">${t}</div>
+      <div style="background:white;padding:5px 8px;border-top:1px solid var(--slate-100)"><input class="form-input" style="width:100%;font-size:12px;padding:6px 8px" placeholder="Descripción..."></div>
+      <div style="background:white;padding:5px 8px;border-top:1px solid var(--slate-100)"><input class="form-input" style="width:100%;font-size:12px;padding:6px 8px" placeholder="Descripción..."></div>`).join('')}
+    </div></div>`
+  },
+  {
+    id: 'medidas', label: 'Medidas y metas',
+    html: `<div class="form-section"><h3>📊 Estado actual y metas</h3>
+    <div class="medidas-form-grid">
+      <div class="mfg-header">Medida</div>
+      <div class="mfg-header">Meta</div>
+      <div class="mfg-header">Anterior (28/05)</div>
+      <div class="mfg-header">Actual (hoy)</div>
+      ${[['Peso (kg)','85','94',''],['Talla (m)','—','1.85',''],['Cintura (cm)','80','92',''],['Cadera (cm)','90','100',''],['Brazo (cm)','30','33',''],['Pecho (cm)','90','98',''],['Muslo (cm)','50','56',''],['IMC','—','27.4','']].map(([l,m,a,c])=>`
+      <div class="mfg-label">${l}</div>
+      <div class="mfg-cell meta"><input value="${m}" style="color:var(--slate-400)"></div>
+      <div class="mfg-cell meta"><input value="${a}" style="color:var(--slate-400)" readonly></div>
+      <div class="mfg-cell"><input value="${c}" placeholder="Ingresar..."></div>`).join('')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
+      <div class="form-group"><label>Motivación del cliente</label><select class="form-select"><option>Bajar de peso</option><option>Mejorar salud</option><option>Ganar masa muscular</option><option>Controlar enfermedad</option></select></div>
+      <div class="form-group"><label>Fecha próxima consulta</label><input class="form-input" type="date"></div>
+      <div class="form-group full"><label>Asesoría personalizada / comentarios</label><textarea class="form-textarea">El cliente reporta buena adherencia al plan. Se recomienda aumentar consumo de agua a 3 litros diarios y mantener actividad física.</textarea></div>
+    </div></div>`
+  },
+  {
+    id: 'plan', label: 'Plan alimenticio',
+    html: `<div class="form-section"><h3>🥗 Plan de alimentación semanal</h3>
+    <table class="plan-form-table">
+      <thead><tr><th></th><th>Desayuno</th><th>Almuerzo</th><th>Cena</th><th>Meriendas</th></tr></thead>
+      <tbody>
+        ${[['L','Avena con frutas y chía','Arroz integral, pechuga, ensalada','Sopa de verduras, tortilla','Manzana, nueces'],
+           ['Ma','Huevos revueltos, pan integral','Frijoles, pollo asado, aguacate','Ensalada de atún','Yogur natural'],
+           ['Mi','Yogur con granola','Pasta integral, res, brócoli','Caldo de pollo','Zanahoria con hummus'],
+           ['J','Avena con plátano','Arroz, lentejas, pollo al horno','Sopa de frijoles','Pepino con limón'],
+           ['V','Licuado verde con proteína','Pescado, arroz, ensalada','Tacos de lechuga','Fresas'],
+           ['S','Panqueques de avena','Pollo a la naranja, arroz','Pizza integral casera','Palomitas'],
+           ['D','Huevos con pan integral','Res estofada, puré de papa','Caldo tlalpeño','Melón']].map(([d,...vals])=>`
+        <tr><td>${d}</td>${vals.map(v=>`<td><input value="${v}" placeholder="Alimentos..."></td>`).join('')}</tr>`).join('')}
+      </tbody>
+    </table></div>`
+  },
+  {
+    id: 'resumen', label: 'Resumen',
+    html: `<div class="form-section"><h3>✅ Resumen de consulta</h3>
+    <div class="alert-row alert-green" style="margin-bottom:16px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><polyline points="20 6 9 17 4 12"/></svg>
+      La consulta está lista para finalizarse. Se enviará un resumen por correo a jorge@gmail.com y al nutricionista.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div style="background:var(--slate-50);border-radius:var(--radius);padding:16px">
+        <div style="font-size:12px;font-weight:600;color:var(--slate-500);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">Datos del caso</div>
+        <div class="field-row"><div class="field-label">Caso N°</div><div class="field-value" style="font-family:monospace">00000004</div></div>
+        <div class="field-row"><div class="field-label">Fecha</div><div class="field-value">28/06/2024 · 9:47 a.m.</div></div>
+        <div class="field-row"><div class="field-label">Profesional</div><div class="field-value">Guillermo Flores</div></div>
+        <div class="field-row"><div class="field-label">Cliente</div><div class="field-value">Jorge Gómez</div></div>
+      </div>
+      <div style="background:var(--green-50);border-radius:var(--radius);padding:16px;border:1px solid var(--green-200)">
+        <div style="font-size:12px;font-weight:600;color:var(--green-700);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">Progreso en esta consulta</div>
+        <div class="field-row"><div class="field-label">Peso anterior</div><div class="field-value">94 kg</div></div>
+        <div class="field-row"><div class="field-label">Peso actual</div><div class="field-value" style="color:var(--green-600);font-weight:600">90 kg ▼ 4 kg</div></div>
+        <div class="field-row"><div class="field-label">Meta restante</div><div class="field-value">5 kg para meta de 85 kg</div></div>
+        <div class="field-row"><div class="field-label">Próxima cita</div><div class="field-value">28 de julio, 2024</div></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="showToast('Vista previa generada')">Vista previa del resumen</button>
+      <button class="btn btn-primary" onclick="finalizarConsulta()" style="background:var(--green-500)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px"><polyline points="20 6 9 17 4 12"/></svg>
+        Finalizar y enviar correo
+      </button>
+    </div></div>`
+  }
+];
+
+let currentStep = 0;
+
+function renderWizard() {
+  const stepsEl = document.getElementById('wizardSteps');
+  stepsEl.innerHTML = steps.map((s, i) => {
+    const state = i < currentStep ? 'done' : i === currentStep ? 'current' : 'pending';
+    const circle = i < currentStep ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg>` : (i + 1);
+    return `
+      <div class="wstep">
+        <div class="wstep-circle ${state}">${circle}</div>
+        <span class="wstep-label ${state}">${s.label}</span>
+      </div>
+      ${i < steps.length - 1 ? `<div class="wstep-line ${i < currentStep ? 'done' : ''}"></div>` : ''}
+    `;
+  }).join('');
+
+  document.getElementById('wizardContent').innerHTML = steps[currentStep].html;
+  document.getElementById('stepIndicator').textContent = `Paso ${currentStep + 1} de ${steps.length}`;
+  document.getElementById('btnPrev').style.display = currentStep > 0 ? 'inline-flex' : 'none';
+  document.getElementById('btnNext').textContent = currentStep === steps.length - 1 ? 'Finalizar consulta ✓' : 'Continuar →';
+}
+
+function wizardNext() {
+  if (currentStep < steps.length - 1) { currentStep++; renderWizard(); window.scrollTo(0,0); }
+  else { finalizarConsulta(); }
+}
+function wizardPrev() {
+  if (currentStep > 0) { currentStep--; renderWizard(); window.scrollTo(0,0); }
+}
+function finalizarConsulta() {
+  showToast('¡Consulta finalizada! Resumen enviado por correo.');
+  setTimeout(() => { currentStep = 0; showPage('expediente', null); }, 1200);
+}
+
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  if (id === 'nueva') { currentStep = 0; renderWizard(); }
+  window.scrollTo(0, 0);
+}
+
+function showExpediente() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-expediente').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item')[1].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function switchTab(tabId, tabEl) {
+  document.querySelectorAll('#page-expediente [id^="tab-"]').forEach(t => t.style.display = 'none');
+  document.getElementById(tabId).style.display = 'block';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function filterClients(val) {
+  const rows = document.querySelectorAll('#clientList .client-row');
+  rows.forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(val.toLowerCase()) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
