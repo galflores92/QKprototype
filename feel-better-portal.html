@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feel Better — Resumen de cita #00000003</title>
+<title>Feel Better — Portal Nutricionista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
+/* ── DESIGN TOKENS — Feel Better v1.0 ── */
 :root {
+  /* Verdes de marca */
   --green-950: #154212;
   --green-900: #166534;
   --green-800: #23501E;
@@ -17,6 +21,7 @@
   --green-100: #E7E9E1;
   --green-50:  #EDEFE7;
   --green-25:  #F3F4ED;
+  /* Neutros — escala de tinta */
   --ink-900: #191C18;
   --ink-700: #42493E;
   --ink-500: #72796E;
@@ -24,679 +29,1614 @@
   --ink-200: #E2E3DC;
   --ink-100: #F3F4F6;
   --ink-50:  #FAFAFA;
+  /* Superficies */
   --cream-50: #FAFAFA;
-  --white: #FFFFFF;
+  --white:    #FFFFFF;
+  --warm-100: #FFDCC4;
   --teal-700: #356668;
   --teal-200: #B9ECEE;
-  --warm-100: #FFDCC4;
+  /* Alertas Material */
   --success: #4CAF50;
   --warning: #FF9800;
   --error:   #F44336;
+  --info:    #2196F3;
+  /* Espaciado */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  /* Radios */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-pill: 9999px;
+  /* Sombras */
+  --shadow-xs:   0 1px 2px rgba(0,0,0,0.05);
+  --shadow-card: 0 4px 20px rgba(0,0,0,0.04);
+  --shadow-pop:  0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px -3px rgba(0,0,0,0.1);
+  --shadow-nav-up: 0 -4px 20px rgba(0,0,0,0.03);
+  /* Layout */
+  --sidebar-w: 228px;
+  --topbar-h:  64px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
 body {
   font-family: 'Inter', sans-serif;
-  background: #e8e8e8;
+  background: var(--cream-50);
   color: var(--ink-900);
+  min-height: 100vh;
+  display: flex;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── SCREEN TOOLBAR ── */
-.toolbar {
+/* ── TIPOGRAFÍA ── */
+.t-display { font-size: 40px; font-weight: 700; letter-spacing: -0.8px; line-height: 1.1; }
+.t-h1      { font-size: 32px; font-weight: 700; letter-spacing: -0.32px; }
+.t-h2      { font-size: 24px; font-weight: 700; letter-spacing: 0; }
+.t-h3      { font-size: 18px; font-weight: 500; letter-spacing: 0; }
+.t-h4      { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+.t-body-lg { font-size: 18px; font-weight: 400; }
+.t-body    { font-size: 16px; font-weight: 400; line-height: 1.6; }
+.t-body-bold { font-size: 16px; font-weight: 700; }
+.t-label   { font-size: 14px; font-weight: 500; letter-spacing: 0.14px; color: var(--ink-700); }
+.t-overline { font-size: 14px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase; color: var(--ink-500); }
+.t-caption { font-size: 12px; font-weight: 500; color: var(--ink-500); }
+.t-stat    { font-size: 32px; font-weight: 700; letter-spacing: -0.32px; color: var(--green-950); }
+.t-btn     { font-size: 16px; font-weight: 700; letter-spacing: 0.32px; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
   background: var(--green-950);
-  padding: 14px 32px;
-  display: flex; align-items: center; justify-content: space-between;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 100;
 }
-.toolbar-brand { display: flex; align-items: center; gap: 10px; }
-.toolbar-wordmark { font-size: 16px; font-weight: 700; letter-spacing: -0.05em; color: white; }
-.toolbar-wordmark span { color: var(--green-400); }
-.toolbar-doc { font-size: 13px; color: var(--green-500); margin-top: 1px; }
-.toolbar-actions { display: flex; gap: 10px; }
-.tbtn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 18px; border-radius: 8px;
-  font-family: 'Inter'; font-size: 14px; font-weight: 700;
-  cursor: pointer; border: none; transition: all 150ms;
+.sidebar-logo {
+  height: var(--topbar-h);
+  padding: 0 var(--s-5);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
 }
-.tbtn-primary { background: var(--green-500); color: var(--green-950); }
-.tbtn-primary:hover { background: var(--green-400); }
-.tbtn-ghost { background: rgba(255,255,255,0.1); color: white; }
-.tbtn-ghost:hover { background: rgba(255,255,255,0.18); }
-
-/* ── PAGE WRAPPER ── */
-.pages-wrap {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 20px; padding: 28px 20px 48px;
-}
-
-/* ── INDIVIDUAL PAGE ── */
-.page {
-  width: 816px;
-  background: white;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-  position: relative;
-  overflow: hidden;
-}
-
-/* ── PAGE HEADER ── */
-.page-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 32px 16px;
-  border-bottom: 3px solid var(--green-700);
-}
-.header-brand { display: flex; flex-direction: column; }
-.header-wordmark { font-size: 18px; font-weight: 700; letter-spacing: -0.05em; color: var(--green-900); line-height: 1; }
-.header-wordmark span { color: var(--green-400); }
-.header-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-500); margin-top: 3px; }
-.header-title { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--green-950); }
-.header-meta { text-align: right; }
-.header-case { font-size: 11px; font-weight: 700; font-family: monospace; color: var(--ink-500); letter-spacing: 0.04em; }
-.header-date { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-top: 2px; }
-
-/* ── SECTION BAND ── */
-.section-band {
-  background: var(--green-700);
+.logo-wordmark {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.05em;
   color: white;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 6px 32px;
-  display: flex; align-items: center; gap: 8px;
+  line-height: 1;
 }
+.logo-wordmark span { color: var(--green-400); }
+.logo-sub { font-size: 11px; font-weight: 400; color: var(--green-500); letter-spacing: 0.04em; }
 
-/* ── CONTENT AREA ── */
-.section-body { padding: 14px 32px 8px; }
-
-/* ── FIELD GRID ── */
-.field-grid { display: grid; gap: 0; }
-.fg-2 { grid-template-columns: 1fr 1fr; }
-.fg-3 { grid-template-columns: 1fr 1fr 1fr; }
-.fg-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
-.field-cell { padding: 6px 0 8px; border-bottom: 1px solid var(--ink-50); padding-right: 16px; }
-.field-cell:nth-last-child(-n+2).fg-2-last,
-.field-cell.no-border { border-bottom: none; }
-.field-key { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 3px; }
-.field-val { font-size: 13px; font-weight: 400; color: var(--ink-900); line-height: 1.4; min-height: 18px; }
-.field-val.mono { font-family: monospace; font-size: 12px; }
-.field-val.empty { color: var(--ink-200); font-style: italic; }
-
-/* ── CASE BANNER ── */
-.case-banner {
-  background: var(--green-25);
-  border-bottom: 1px solid var(--green-100);
-  padding: 10px 32px;
-  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 0;
+.sidebar-nav { flex: 1; padding: var(--s-3) var(--s-2); display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+.nav-section { font-size: 11px; font-weight: 600; color: var(--green-500); letter-spacing: 0.08em; text-transform: uppercase; padding: var(--s-3) var(--s-3) var(--s-1); margin-top: var(--s-2); }
+.nav-item {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: 9px var(--s-3); border-radius: var(--r-sm);
+  cursor: pointer; color: rgba(255,255,255,0.55);
+  font-size: 14px; font-weight: 500;
+  transition: background 150ms cubic-bezier(0.2,0,0,1), color 150ms;
+  user-select: none;
 }
-.case-item { padding-right: 16px; }
-.case-key { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-700); margin-bottom: 2px; }
-.case-val { font-size: 13px; font-weight: 600; color: var(--green-950); }
-.case-val.mono { font-family: monospace; font-size: 12px; }
-
-/* ── PROGRESS BADGE ── */
-.progress-badge {
+.nav-item:hover { background: rgba(255,255,255,0.07); color: white; }
+.nav-item.active { background: var(--green-700); color: white; }
+.nav-item i { width: 18px; height: 18px; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
   background: var(--green-700);
-  border-radius: 9999px;
-  padding: 3px 10px;
-  font-size: 11px; font-weight: 700; color: white;
-  display: inline-flex; align-items: center; gap: 4px;
+  color: var(--green-400);
+  font-size: 11px; font-weight: 700;
+  padding: 2px 7px; border-radius: var(--r-pill);
 }
-.progress-badge.positive { background: var(--success); }
-.progress-badge.negative { background: var(--error); }
+.nav-item.active .nav-badge { background: rgba(255,255,255,0.15); color: white; }
 
-/* ── MEDIDAS TABLE ── */
-.medidas-wrap { padding: 12px 32px; overflow-x: auto; }
-.medidas-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
-.medidas-tbl th {
-  padding: 7px 10px; text-align: right;
-  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--ink-500); border-bottom: 2px solid var(--green-200);
+.sidebar-footer {
+  padding: var(--s-3) var(--s-2);
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
-.medidas-tbl th:first-child { text-align: left; }
-.medidas-tbl td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--ink-50); color: var(--ink-700); }
-.medidas-tbl td:first-child { text-align: left; font-weight: 600; color: var(--ink-600); font-size: 12px; }
-.medidas-tbl tr:last-child td { border-bottom: none; }
-.th-prev { background: var(--green-25); color: var(--ink-400) !important; }
-.th-actual { background: var(--green-50); color: var(--green-800) !important; }
-.td-prev { color: var(--ink-400) !important; font-size: 11px; }
-.td-actual { font-weight: 700 !important; color: var(--green-950) !important; font-size: 13px; }
-.td-meta { color: var(--ink-300) !important; font-size: 11px; font-style: italic; }
-.delta-pos { color: var(--success); font-weight: 700; font-size: 11px; }
-.delta-neg { color: var(--error); font-weight: 700; font-size: 11px; }
-.delta-neu { color: var(--ink-400); font-size: 11px; }
-.imc-row td { background: var(--green-25); font-weight: 700; border-top: 1px solid var(--green-200); }
+.user-row {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-2) var(--s-3); border-radius: var(--r-sm);
+  cursor: pointer; transition: background 150ms;
+}
+.user-row:hover { background: rgba(255,255,255,0.07); }
+.avatar-wrap { position: relative; flex-shrink: 0; }
+.avatar {
+  width: 36px; height: 36px; border-radius: var(--r-pill);
+  background: var(--green-700);
+  border: 2px solid var(--green-200);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: white;
+}
+.status-dot {
+  width: 10px; height: 10px; border-radius: var(--r-pill);
+  background: var(--success); border: 2px solid var(--green-950);
+  position: absolute; bottom: 0; right: 0;
+}
+.user-info .name { font-size: 13px; font-weight: 600; color: white; }
+.user-info .role { font-size: 11px; color: var(--green-500); }
 
-/* ── DIETA GRID ── */
-.dieta-wrap { padding: 10px 32px 12px; }
-.dieta-grid { display: grid; grid-template-columns: 80px 1fr 1fr 1fr 1fr; gap: 1px; background: var(--green-200); border-radius: 8px; overflow: hidden; }
-.dg-h { background: var(--green-700); padding: 6px 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: white; }
-.dg-day { background: var(--green-50); padding: 8px 10px; font-size: 11px; font-weight: 700; color: var(--green-800); display: flex; align-items: flex-start; }
-.dg-cell { background: white; padding: 7px 8px; font-size: 11px; color: var(--ink-700); line-height: 1.4; vertical-align: top; min-height: 44px; }
-.dg-cell.empty { color: var(--ink-200); }
+/* ── MAIN ── */
+.main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
 
-/* ── LIFESTYLE BOX ── */
-.ls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px 32px; }
-.ls-card { background: var(--green-25); border-radius: 8px; padding: 10px 12px; border: 1px solid var(--green-100); }
-.ls-key { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--green-700); margin-bottom: 4px; }
-.ls-val { font-size: 12px; color: var(--ink-800); line-height: 1.5; }
-.pill-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
-.pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
-.pill-yes  { background: var(--green-400); color: var(--green-800); }
-.pill-no   { background: var(--green-100); color: var(--ink-500); }
-.pill-teal { background: var(--teal-200); color: var(--teal-700); }
-.pill-warm { background: var(--warm-100); color: #7A3B00; }
+/* ── TOP APP-BAR ── */
+.topbar {
+  height: var(--topbar-h);
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #F5F5F5;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  display: flex; align-items: center;
+  padding: 0 var(--s-6);
+  gap: var(--s-4);
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar-title { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; color: var(--ink-900); flex: 1; }
+.topbar-title .breadcrumb { font-size: 14px; font-weight: 400; color: var(--ink-400); margin: 0 6px; }
 
-/* ── MOTIVACION BOX ── */
-.motiv-wrap { padding: 10px 32px 14px; }
-.motiv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.motiv-card { border-radius: 8px; padding: 12px 14px; }
-.motiv-card.green { background: var(--green-700); }
-.motiv-card.light { background: var(--green-25); border: 1px solid var(--green-100); }
-.motiv-key-dark { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--green-500); margin-bottom: 6px; }
-.motiv-val-dark { font-size: 12px; color: white; line-height: 1.5; }
-.motiv-key-light { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--green-700); margin-bottom: 6px; }
-.motiv-val-light { font-size: 12px; color: var(--ink-800); line-height: 1.5; }
+/* ── BOTONES ── */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: 14px 24px; border-radius: var(--r-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; font-weight: 700; letter-spacing: 0.32px;
+  cursor: pointer; border: none;
+  transition: all 150ms cubic-bezier(0.2,0,0,1);
+  text-decoration: none; white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn i { width: 16px; height: 16px; }
+.btn-sm { padding: 9px 16px; font-size: 14px; }
 
-/* ── ANTECEDENTES ── */
-.ante-wrap { padding: 10px 32px 14px; display: flex; flex-direction: column; gap: 8px; }
-.ante-item { background: var(--green-25); border-radius: 6px; padding: 8px 12px; border-left: 3px solid var(--green-700); }
-.ante-q { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green-700); margin-bottom: 3px; }
-.ante-a { font-size: 13px; color: var(--ink-900); line-height: 1.5; }
-.ante-a.sin-dato { color: var(--ink-400); font-style: italic; }
+.btn-primary { background: var(--green-950); color: white; }
+.btn-primary:hover { background: #0f3009; }
 
-/* ── PAGE FOOTER ── */
-.page-footer {
+.btn-secondary { background: var(--white); color: var(--green-950); border: 1px solid var(--green-950); padding: 13px 23px; }
+.btn-secondary:hover { background: var(--green-25); }
+.btn-secondary.btn-sm { padding: 8px 15px; }
+
+.btn-ghost { background: transparent; color: var(--green-950); padding: 14px 16px; }
+.btn-ghost:hover { background: var(--green-25); }
+
+.btn-on-dark { background: var(--white); color: var(--green-950); }
+.btn-on-dark:hover { background: var(--green-50); }
+
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── CHIPS ── */
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: 6px 12px; border-radius: var(--r-pill);
+  font-size: 13px; font-weight: 500; line-height: 1;
+}
+.chip-dot { width: 6px; height: 6px; border-radius: var(--r-pill); flex-shrink: 0; }
+.chip-mint  { background: var(--green-400); color: var(--green-800); }
+.chip-sage  { background: var(--green-100); color: var(--green-800); }
+.chip-teal  { background: var(--teal-200); color: var(--teal-700); }
+.chip-warm  { background: var(--warm-100); color: #5C2E00; }
+.chip-dark  { background: var(--green-950); color: white; }
+
+/* ── INPUTS ── */
+.form-label { font-size: 14px; font-weight: 500; letter-spacing: 0.14px; color: var(--ink-700); margin-bottom: var(--s-1); display: block; }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--ink-100);
+  border-radius: var(--r-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px; font-weight: 400;
+  color: var(--ink-900);
+  background: var(--white);
+  outline: none;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--ink-400); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--green-700);
+  box-shadow: 0 0 0 3px rgba(45,90,39,0.12);
+}
+.form-input:disabled { border-color: var(--green-200); background: var(--cream-50); color: var(--ink-400); }
+.form-textarea { resize: vertical; min-height: 88px; line-height: 1.6; }
+.form-caption { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-top: var(--s-1); }
+.form-error-msg { font-size: 12px; font-weight: 500; color: var(--error); margin-top: var(--s-1); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border-radius: var(--r-md);
+  border: 1px solid #F5F5F5;
+  box-shadow: var(--shadow-card);
+}
+.card-header {
+  padding: var(--s-5) var(--s-5) var(--s-4);
+  border-bottom: 1px solid var(--ink-50);
   display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 32px;
-  border-top: 1px solid var(--ink-50);
-  background: var(--green-25);
-  margin-top: 8px;
 }
-.footer-copy { font-size: 10px; color: var(--ink-400); }
-.footer-page { font-size: 10px; font-weight: 600; color: var(--ink-500); }
-.footer-conf { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--ink-400); }
-.conf-dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--green-500); }
+.card-title { font-size: 18px; font-weight: 500; color: var(--ink-900); }
+.card-body { padding: 0; }
 
-/* ── PRÓXIMA CITA BANNER ── */
-.next-banner {
-  background: var(--green-950);
-  margin: 0 32px 16px;
-  border-radius: 10px;
-  padding: 12px 20px;
-  display: flex; align-items: center; justify-content: space-between;
+.feature-card {
+  background: var(--green-700);
+  border-radius: var(--r-md);
+  padding: 22px;
   position: relative; overflow: hidden;
 }
-.next-banner::after {
+.feature-card::after {
   content: '';
-  position: absolute; width: 100px; height: 100px;
-  border-radius: 9999px; background: rgba(255,255,255,0.06);
-  bottom: -30px; right: -20px;
+  position: absolute;
+  width: 140px; height: 140px;
+  border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.08);
+  bottom: -40px; right: -40px;
+  pointer-events: none;
 }
-.next-key { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-500); margin-bottom: 4px; }
-.next-val { font-size: 16px; font-weight: 700; color: white; letter-spacing: -0.3px; }
-.next-right { text-align: right; }
-.next-label { font-size: 11px; color: var(--green-500); }
-.next-prof  { font-size: 13px; font-weight: 600; color: white; margin-top: 2px; }
 
-/* ── PRINT ── */
+/* ── LAYOUT ── */
+.content { flex: 1; padding: var(--s-6); }
+.page { display: none; animation: fadeIn 200ms cubic-bezier(0.2,0,0,1); }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--s-4); margin-bottom: var(--s-5); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }
+.grid-dash { display: grid; grid-template-columns: 1fr 320px; gap: var(--s-5); }
+
+/* ── STAT CARDS ── */
+.stat-card {
+  background: var(--white);
+  border-radius: var(--r-md);
+  border: 1px solid #F5F5F5;
+  box-shadow: var(--shadow-card);
+  padding: var(--s-5);
+}
+.stat-overline { font-size: 14px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase; color: var(--ink-500); margin-bottom: var(--s-3); display: flex; align-items: center; gap: var(--s-2); }
+.stat-overline i { width: 16px; height: 16px; }
+.stat-number { font-size: 32px; font-weight: 700; letter-spacing: -0.32px; color: var(--green-950); line-height: 1; }
+.stat-sub { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-top: var(--s-1); }
+.stat-up { color: var(--success); font-weight: 600; }
+.stat-card.primary-card { background: var(--green-700); border-color: var(--green-700); }
+.stat-card.primary-card .stat-overline { color: var(--green-500); }
+.stat-card.primary-card .stat-number { color: white; }
+.stat-card.primary-card .stat-sub { color: rgba(255,255,255,0.6); }
+
+/* ── LIST ROWS ── */
+.list-row {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-5);
+  border-bottom: 1px solid var(--ink-50);
+  cursor: pointer;
+  transition: background 150ms cubic-bezier(0.2,0,0,1);
+}
+.list-row:last-child { border-bottom: none; }
+.list-row:hover { background: var(--green-25); }
+.client-av {
+  width: 40px; height: 40px; border-radius: var(--r-pill);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; color: white; flex-shrink: 0;
+  border: 2px solid var(--green-200);
+}
+.av1{background:#5c6bb5;} .av2{background:#b55c7a;} .av3{background:#5a9e3d;border-color:var(--green-100);}
+.av4{background:#b5835c;} .av5{background:#3d9e8e;border-color:var(--teal-200);} .av6{background:#8e5cb5;}
+.row-info { flex: 1; min-width: 0; }
+.row-name { font-size: 14px; font-weight: 500; color: var(--ink-900); }
+.row-meta { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-top: 2px; }
+.row-actions { display: flex; align-items: center; gap: var(--s-2); flex-shrink: 0; }
+
+/* ── AGENDA ── */
+.agenda-row {
+  display: flex; align-items: flex-start; gap: var(--s-3);
+  padding: var(--s-3) var(--s-5);
+  border-bottom: 1px solid var(--ink-50);
+}
+.agenda-row:last-child { border-bottom: none; }
+.agenda-time { font-size: 12px; font-weight: 600; color: var(--ink-500); width: 48px; flex-shrink: 0; padding-top: 3px; }
+.agenda-dot { width: 8px; height: 8px; border-radius: var(--r-pill); flex-shrink: 0; margin-top: 5px; }
+.dot-success { background: var(--success); }
+.dot-warning { background: var(--warning); }
+.dot-neutral { background: var(--ink-200); }
+.agenda-name { font-size: 14px; font-weight: 500; color: var(--ink-900); }
+.agenda-sub  { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-top: 2px; }
+
+/* ── ALERTAS ── */
+.alert {
+  display: flex; align-items: flex-start; gap: var(--s-3);
+  padding: var(--s-3) var(--s-4); border-radius: var(--r-sm);
+  font-size: 14px; font-weight: 400; line-height: 1.5;
+  margin-bottom: var(--s-4);
+}
+.alert i { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+.alert-warning { background: #FFF8E7; border: 1px solid #FFCC02; color: #7A5200; }
+.alert-warning i { color: var(--warning); }
+.alert-success { background: #F1FBF1; border: 1px solid #A5D6A7; color: #1B5E20; }
+.alert-success i { color: var(--success); }
+.alert-info { background: #E3F2FD; border: 1px solid #90CAF9; color: #0D47A1; }
+.alert-info i { color: var(--info); }
+
+/* ── EXPEDIENTE ── */
+.exp-header-card {
+  background: var(--white);
+  border-radius: var(--r-md);
+  border: 1px solid #F5F5F5;
+  box-shadow: var(--shadow-card);
+  padding: var(--s-5) var(--s-6);
+  margin-bottom: var(--s-5);
+  display: flex; align-items: center; gap: var(--s-5);
+}
+.exp-avatar {
+  width: 64px; height: 64px; border-radius: var(--r-pill);
+  background: var(--green-100);
+  border: 2px solid var(--green-700);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 700; color: var(--green-700); flex-shrink: 0;
+}
+.exp-name { font-size: 24px; font-weight: 700; color: var(--green-950); margin-bottom: var(--s-2); }
+.exp-chips { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-bottom: var(--s-2); }
+.exp-meta { display: flex; gap: var(--s-4); flex-wrap: wrap; }
+.exp-meta-item { font-size: 12px; font-weight: 500; color: var(--ink-500); display: flex; align-items: center; gap: 4px; }
+.exp-meta-item i { width: 13px; height: 13px; }
+.exp-actions { margin-left: auto; display: flex; gap: var(--s-2); flex-shrink: 0; }
+
+/* ── TABS ── */
+.tabs { display: flex; gap: 2px; background: var(--green-100); border-radius: var(--r-pill); padding: 3px; width: fit-content; margin-bottom: var(--s-5); }
+.tab { padding: 7px 18px; border-radius: var(--r-pill); font-size: 14px; font-weight: 500; cursor: pointer; color: var(--ink-500); transition: all 150ms; user-select: none; }
+.tab.active { background: var(--white); color: var(--ink-900); box-shadow: var(--shadow-xs); font-weight: 600; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── MEDIDAS TABLE ── */
+.section-card {
+  background: var(--white);
+  border-radius: var(--r-md);
+  border: 1px solid #F5F5F5;
+  box-shadow: var(--shadow-card);
+  padding: var(--s-5);
+  margin-bottom: var(--s-4);
+}
+.section-heading {
+  font-size: 14px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase;
+  color: var(--ink-500); margin-bottom: var(--s-4);
+  display: flex; align-items: center; gap: var(--s-2);
+  padding-bottom: var(--s-3); border-bottom: 1px solid var(--ink-100);
+}
+.section-heading i { width: 16px; height: 16px; color: var(--green-700); }
+
+.medidas-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.medidas-table th {
+  padding: var(--s-2) var(--s-3); text-align: right;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase;
+  color: var(--ink-500); border-bottom: 1px solid var(--ink-100);
+}
+.medidas-table th:first-child { text-align: left; }
+.medidas-table td {
+  padding: 10px var(--s-3); text-align: right;
+  border-bottom: 1px solid var(--ink-50); color: var(--ink-700);
+}
+.medidas-table td:first-child { text-align: left; font-weight: 500; color: var(--ink-500); }
+.medidas-table tr:last-child td { border-bottom: none; }
+.th-meta { background: var(--green-25); }
+.th-actual { background: var(--green-50); color: var(--green-800) !important; }
+.td-actual { font-weight: 700; color: var(--green-950) !important; }
+.td-meta { color: var(--ink-400) !important; }
+.delta-pos { color: var(--success); font-size: 12px; font-weight: 700; }
+.delta-neg { color: var(--error); font-size: 12px; font-weight: 700; }
+
+/* ── PROGRESS BARS ── */
+.progress-wrap { margin-bottom: var(--s-3); }
+.progress-label { display: flex; justify-content: space-between; margin-bottom: var(--s-1); }
+.progress-label span { font-size: 12px; font-weight: 500; color: var(--ink-700); }
+.progress-track { background: var(--green-100); border-radius: var(--r-pill); height: 8px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: var(--r-pill); background: var(--green-700); transition: width 400ms cubic-bezier(0.2,0,0,1); }
+.progress-fill.teal { background: var(--teal-700); }
+.progress-fill.fat  { background: #5B2D00; }
+
+/* ── PLAN TABLE ── */
+.plan-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.plan-table th {
+  padding: var(--s-2) var(--s-3);
+  background: var(--green-25);
+  font-size: 12px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase;
+  color: var(--ink-500); border-bottom: 1px solid var(--green-200);
+  text-align: left;
+}
+.plan-table td { padding: 10px var(--s-3); border-bottom: 1px solid var(--ink-50); color: var(--ink-700); vertical-align: top; line-height: 1.4; }
+.plan-table td:first-child { font-weight: 700; color: var(--ink-500); font-size: 11px; letter-spacing: 0.04em; background: var(--green-25); text-align: center; width: 36px; border-right: 1px solid var(--green-100); }
+.plan-table tr:last-child td { border-bottom: none; }
+.plan-table tr:hover td { background: var(--green-50); }
+.plan-table tr:hover td:first-child { background: var(--green-50); }
+
+/* ── HISTORIAL ── */
+.consulta-row {
+  display: flex; align-items: center; gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--ink-50);
+  cursor: pointer; transition: background 150ms;
+}
+.consulta-row:last-child { border-bottom: none; }
+.consulta-row:hover { background: var(--green-25); }
+.consulta-num { font-size: 12px; font-weight: 700; color: var(--ink-400); font-family: monospace; width: 88px; flex-shrink: 0; }
+.consulta-info { flex: 1; }
+.consulta-fecha { font-size: 14px; font-weight: 500; color: var(--ink-900); }
+.consulta-sub   { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-top: 2px; }
+.consulta-delta { text-align: right; flex-shrink: 0; }
+.delta-label { font-size: 12px; font-weight: 500; color: var(--ink-400); }
+
+/* ── CAMPO CLÍNICO ── */
+.field-row { margin-bottom: var(--s-3); }
+.field-row:last-child { margin-bottom: 0; }
+.field-label { font-size: 12px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase; color: var(--ink-500); margin-bottom: 3px; }
+.field-value { font-size: 14px; font-weight: 400; color: var(--ink-900); line-height: 1.5; }
+
+/* ── SEARCH HERO ── */
+.search-hero {
+  background: var(--white);
+  border-radius: var(--r-xl);
+  border: 1px solid #F5F5F5;
+  box-shadow: var(--shadow-card);
+  padding: var(--s-7) var(--s-6);
+  text-align: center;
+  margin-bottom: var(--s-5);
+}
+.search-box { display: flex; gap: var(--s-3); max-width: 440px; margin: 0 auto; }
+.search-input-wrap { flex: 1; position: relative; }
+.search-input-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--ink-400); pointer-events: none; }
+.search-field {
+  width: 100%; padding: 14px 16px 14px 42px;
+  border: 1px solid var(--ink-100); border-radius: var(--r-sm);
+  font-family: 'Inter', sans-serif; font-size: 16px;
+  color: var(--ink-900); outline: none;
+  transition: border-color 150ms, box-shadow 150ms;
+}
+.search-field::placeholder { color: var(--ink-400); }
+.search-field:focus { border-color: var(--green-700); box-shadow: 0 0 0 3px rgba(45,90,39,0.12); }
+
+/* ── WIZARD ── */
+.wizard-steps { display: flex; align-items: center; }
+.wstep { display: flex; align-items: center; gap: var(--s-2); }
+.wstep-circle {
+  width: 28px; height: 28px; border-radius: var(--r-pill);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+  transition: all 200ms;
+}
+.wstep-circle i { width: 13px; height: 13px; }
+.wstep-circle.done    { background: var(--green-700); color: white; }
+.wstep-circle.current { background: var(--green-950); color: white; box-shadow: 0 0 0 4px var(--green-100); }
+.wstep-circle.pending { background: var(--green-100); color: var(--ink-400); }
+.wstep-label { font-size: 13px; font-weight: 500; white-space: nowrap; }
+.wstep-label.done    { color: var(--green-700); }
+.wstep-label.current { color: var(--green-950); font-weight: 600; }
+.wstep-label.pending { color: var(--ink-400); }
+.wstep-line { flex: 1; height: 1px; background: var(--green-200); margin: 0 var(--s-2); min-width: 16px; }
+.wstep-line.done { background: var(--green-700); }
+
+.form-section {
+  background: var(--white);
+  border-radius: var(--r-md);
+  border: 1px solid #F5F5F5;
+  box-shadow: var(--shadow-card);
+  padding: var(--s-5);
+  margin-bottom: var(--s-4);
+}
+.form-section-title {
+  font-size: 14px; font-weight: 500; letter-spacing: 0.7px; text-transform: uppercase;
+  color: var(--ink-500); margin-bottom: var(--s-4);
+  padding-bottom: var(--s-3); border-bottom: 1px solid var(--ink-100);
+  display: flex; align-items: center; gap: var(--s-2);
+}
+.form-section-title i { width: 16px; height: 16px; color: var(--green-700); }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: var(--s-4); }
+.form-group { display: flex; flex-direction: column; }
+.form-group.full { grid-column: 1 / -1; }
+.radio-group { display: flex; gap: var(--s-4); margin-top: var(--s-1); }
+.radio-opt { display: flex; align-items: center; gap: var(--s-2); cursor: pointer; font-size: 14px; color: var(--ink-700); }
+.radio-opt input { accent-color: var(--green-700); }
+
+.mfg { display: grid; grid-template-columns: 150px 1fr 1fr 1fr; gap: 1px; background: var(--green-200); border-radius: var(--r-md); overflow: hidden; }
+.mfg-h { background: var(--green-25); padding: var(--s-2) var(--s-3); font-size: 11px; font-weight: 600; letter-spacing: 0.7px; text-transform: uppercase; color: var(--ink-500); }
+.mfg-label { background: var(--white); padding: 10px var(--s-3); font-size: 14px; font-weight: 500; color: var(--ink-700); display: flex; align-items: center; }
+.mfg-cell { background: var(--white); padding: var(--s-1) var(--s-2); }
+.mfg-cell.prev { background: var(--green-25); }
+.mfg-cell input { width: 100%; padding: 8px 10px; border: 1px solid var(--ink-100); border-radius: var(--r-xs); font-size: 14px; font-family: 'Inter'; outline: none; background: transparent; color: var(--ink-900); }
+.mfg-cell input:focus { border-color: var(--green-700); box-shadow: 0 0 0 3px rgba(45,90,39,0.12); background: var(--white); }
+.mfg-cell.prev input { color: var(--ink-400); pointer-events: none; }
+
+.plan-form-table { width: 100%; border-collapse: collapse; }
+.plan-form-table th { padding: var(--s-2) var(--s-3); background: var(--green-25); font-size: 11px; font-weight: 600; letter-spacing: 0.7px; text-transform: uppercase; color: var(--ink-500); border-bottom: 1px solid var(--green-200); text-align: left; }
+.plan-form-table td { padding: 4px; border-bottom: 1px solid var(--ink-50); }
+.plan-form-table td:first-child { padding: 4px var(--s-3); font-weight: 700; font-size: 11px; letter-spacing: 0.04em; color: var(--ink-500); background: var(--green-25); border-right: 1px solid var(--green-100); text-align: center; width: 36px; }
+.plan-form-table input { width: 100%; padding: 8px 10px; border: 1px solid var(--ink-100); border-radius: var(--r-xs); font-size: 13px; font-family: 'Inter'; outline: none; color: var(--ink-700); background: transparent; }
+.plan-form-table input:focus { border-color: var(--green-700); background: var(--green-50); }
+
+.form-nav { display: flex; justify-content: space-between; align-items: center; padding: var(--s-4) 0 0; }
+.step-counter { font-size: 12px; font-weight: 500; color: var(--ink-500); }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: var(--s-5); right: var(--s-5);
+  background: var(--ink-900); color: white;
+  padding: var(--s-3) var(--s-5); border-radius: var(--r-md);
+  font-size: 14px; font-weight: 500; line-height: 1.5;
+  box-shadow: var(--shadow-pop);
+  display: flex; align-items: center; gap: var(--s-3);
+  transform: translateY(80px); opacity: 0;
+  transition: all 300ms cubic-bezier(0.2,0,0,1);
+  z-index: 999; pointer-events: none; max-width: 360px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast i { width: 16px; height: 16px; color: var(--green-400); flex-shrink: 0; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--green-200); border-radius: var(--r-pill); }
+
+/* ── RESUMEN OVERLAY ── */
+.resumen-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  background: #d0d0d0;
+  overflow-y: auto;
+  animation: fadeIn 200ms cubic-bezier(0.2,0,0,1);
+}
+.resumen-overlay.active { display: block; }
+
+.resumen-toolbar {
+  background: var(--green-950);
+  padding: 0 var(--s-6);
+  height: var(--topbar-h);
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 300;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.resumen-toolbar-brand .logo-wordmark { font-size: 16px; font-weight: 700; letter-spacing: -0.05em; color: white; }
+.resumen-toolbar-brand .logo-wordmark span { color: var(--green-400); }
+.resumen-toolbar-doc { font-size: 12px; color: var(--green-500); margin-top: 2px; }
+.resumen-toolbar-actions { display: flex; gap: var(--s-2); }
+
+.resumen-pages { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 28px 20px 48px; }
+
+/* ── RESUMEN PAGE ── */
+.rpage {
+  width: 816px; background: white;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+.rpage-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 32px 14px;
+  border-bottom: 3px solid var(--green-700);
+}
+.rh-brand .rh-wordmark { font-size: 17px; font-weight: 700; letter-spacing: -0.05em; color: var(--green-900); line-height: 1; }
+.rh-brand .rh-wordmark span { color: var(--green-400); }
+.rh-brand .rh-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-500); margin-top: 3px; }
+.rh-title { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; color: var(--green-950); }
+.rh-meta { text-align: right; }
+.rh-case { font-size: 11px; font-weight: 700; font-family: monospace; color: var(--ink-500); letter-spacing: 0.04em; }
+.rh-date { font-size: 12px; font-weight: 500; color: var(--ink-500); margin-top: 2px; }
+
+.rband {
+  background: var(--green-700); color: white;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 32px; display: flex; align-items: center; gap: 8px;
+}
+.rbody { padding: 14px 32px 8px; }
+
+.rcb { display: grid; gap: 0; }
+.rcb-2 { grid-template-columns: 1fr 1fr; }
+.rcb-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+.rfield { padding: 6px 16px 8px 0; border-bottom: 1px solid var(--ink-50); }
+.rfield-k { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-400); margin-bottom: 3px; }
+.rfield-v { font-size: 13px; color: var(--ink-900); line-height: 1.4; min-height: 18px; }
+.rfield-v.mono { font-family: monospace; font-size: 12px; }
+.rfield-v.empty { color: var(--ink-300); font-style: italic; }
+
+.rcase-banner {
+  background: var(--green-25); border-bottom: 1px solid var(--green-100);
+  padding: 10px 32px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.rcb-item { padding-right: 16px; }
+.rcb-k { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-700); margin-bottom: 2px; }
+.rcb-v { font-size: 13px; font-weight: 600; color: var(--green-950); }
+
+.rante-wrap { padding: 10px 32px 14px; display: flex; flex-direction: column; gap: 7px; }
+.rante { background: var(--green-25); border-radius: 6px; padding: 8px 12px; border-left: 3px solid var(--green-700); }
+.rante-q { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green-700); margin-bottom: 3px; }
+.rante-a { font-size: 13px; color: var(--ink-900); line-height: 1.5; }
+.rante-a.empty { color: var(--ink-400); font-style: italic; }
+
+.rls-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px 32px 14px; }
+.rls-card { background: var(--green-25); border-radius: 8px; padding: 10px 12px; border: 1px solid var(--green-100); }
+.rls-k { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--green-700); margin-bottom: 4px; }
+.rls-v { font-size: 12px; color: var(--ink-800); line-height: 1.5; }
+
+.rpill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
+.rpill-yes  { background: var(--green-400); color: var(--green-800); }
+.rpill-no   { background: var(--green-100); color: var(--ink-500); }
+.rpill-teal { background: var(--teal-200); color: var(--teal-700); }
+.rpill-warm { background: var(--warm-100); color: #7A3B00; }
+.rpill-row  { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+
+.rdieta-wrap { padding: 10px 32px 12px; }
+.rdieta { display: grid; grid-template-columns: 80px 1fr 1fr 1fr 1fr; gap: 1px; background: var(--green-200); border-radius: 8px; overflow: hidden; }
+.rdh  { background: var(--green-700); padding: 6px 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: white; }
+.rdday { background: var(--green-50); padding: 8px 10px; font-size: 11px; font-weight: 700; color: var(--green-800); }
+.rdcell { background: white; padding: 7px 8px; font-size: 11px; color: var(--ink-700); line-height: 1.4; min-height: 40px; }
+
+.rmed-wrap { padding: 12px 32px; }
+.rmed-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.rmed-tbl th { padding: 7px 10px; text-align: right; font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-500); border-bottom: 2px solid var(--green-200); }
+.rmed-tbl th:first-child { text-align: left; }
+.rmed-tbl td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--ink-50); color: var(--ink-700); }
+.rmed-tbl td:first-child { text-align: left; font-weight: 600; font-size: 12px; }
+.rmed-tbl tr:last-child td { border-bottom: none; }
+.rth-prev { background: var(--green-25); color: var(--ink-400) !important; }
+.rth-act  { background: var(--green-50); color: var(--green-800) !important; }
+.rtd-prev { color: var(--ink-400) !important; font-size: 11px; }
+.rtd-act  { font-weight: 700 !important; color: var(--green-950) !important; font-size: 13px; }
+.rtd-meta { color: var(--ink-300) !important; font-size: 11px; font-style: italic; }
+.rdpos { color: var(--success); font-weight: 700; font-size: 11px; }
+.rdneg { color: var(--error); font-weight: 700; font-size: 11px; }
+.rdneu { color: var(--ink-400); font-size: 11px; }
+.rimc-row td { background: var(--green-25); font-weight: 700; border-top: 1px solid var(--green-200); }
+
+.rprog-badge { background: var(--success); border-radius: 9999px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: white; display: inline-flex; align-items: center; gap: 4px; }
+
+.rmotiv-wrap { padding: 10px 32px 14px; }
+.rmotiv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rmc-dark { background: var(--green-700); border-radius: 8px; padding: 12px 14px; position: relative; overflow: hidden; }
+.rmc-dark::after { content:''; position:absolute; width:100px; height:100px; border-radius:9999px; background:rgba(255,255,255,0.07); bottom:-25px; right:-20px; }
+.rmc-light { background: var(--green-25); border-radius: 8px; padding: 12px 14px; border: 1px solid var(--green-100); }
+.rmk-dark  { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--green-500); margin-bottom: 5px; }
+.rmv-dark  { font-size: 12px; color: white; line-height: 1.5; }
+.rmk-light { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--green-700); margin-bottom: 5px; }
+.rmv-light { font-size: 12px; color: var(--ink-800); line-height: 1.5; }
+
+.rnext-banner {
+  background: var(--green-950); margin: 0 32px 16px; border-radius: 10px;
+  padding: 14px 20px; display: flex; align-items: center; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+.rnext-banner::after { content:''; position:absolute; width:100px; height:100px; border-radius:9999px; background:rgba(255,255,255,0.06); bottom:-30px; right:-20px; }
+.rnk { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-500); margin-bottom: 4px; }
+.rnv { font-size: 16px; font-weight: 700; color: white; letter-spacing: -0.3px; }
+
+.rplan-wrap { padding: 0 32px 16px; }
+.rplan-grid { display: grid; grid-template-columns: 64px 1fr 1fr 1fr 1fr; gap: 1px; background: var(--green-200); border-radius: 10px; overflow: hidden; }
+.rph { background: var(--green-700); padding: 8px 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: white; }
+.rpday { background: var(--green-50); padding: 8px 6px; font-size: 10px; font-weight: 700; color: var(--green-800); writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); display: flex; justify-content: center; }
+.rpcell { background: white; padding: 7px 8px; font-size: 11px; color: var(--ink-700); line-height: 1.4; vertical-align: top; }
+.rplan-notes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+.rpnote { border-radius: 8px; padding: 10px 12px; }
+.rpnote-green { background: var(--green-25); border: 1px solid var(--green-100); }
+.rpnote-teal  { background: var(--teal-200); border: 1px solid var(--teal-700); }
+.rpnote-k { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 4px; }
+.rpnote-green .rpnote-k { color: var(--green-700); }
+.rpnote-teal  .rpnote-k { color: var(--teal-700); }
+.rpnote-v { font-size: 12px; color: var(--ink-800); line-height: 1.5; }
+
+.rpage-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 32px; border-top: 1px solid var(--ink-50);
+  background: var(--green-25); margin-top: 8px;
+}
+.rfoot-copy { font-size: 10px; color: var(--ink-400); }
+.rfoot-conf { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--ink-400); }
+.rfoot-dot  { width: 6px; height: 6px; border-radius: 9999px; background: var(--green-500); }
+.rfoot-page { font-size: 10px; font-weight: 600; color: var(--ink-500); }
+
 @media print {
-  body { background: white; }
-  .toolbar { display: none !important; }
-  .pages-wrap { padding: 0; gap: 0; align-items: stretch; }
-  .page {
-    width: 100%; box-shadow: none;
-    page-break-after: always;
-    break-after: page;
-  }
-  .page:last-child { page-break-after: auto; break-after: auto; }
+  body > * { display: none !important; }
+  .resumen-overlay { display: block !important; overflow: visible !important; position: static !important; background: white !important; }
+  .resumen-toolbar { display: none !important; }
+  .resumen-pages { padding: 0 !important; gap: 0 !important; align-items: stretch !important; }
+  .rpage { width: 100% !important; box-shadow: none !important; page-break-after: always; break-after: page; }
+  .rpage:last-child { page-break-after: auto; break-after: auto; }
   @page { size: Letter; margin: 0; }
 }
 </style>
 </head>
 <body>
 
-<!-- TOOLBAR (solo en pantalla) -->
-<div class="toolbar">
-  <div class="toolbar-brand">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
     <div>
-      <div class="toolbar-wordmark">Feel Better<span>.</span></div>
-      <div class="toolbar-doc">Resumen de cita #00000003 · Jorge Gómez</div>
+      <div class="logo-wordmark">Feel Better<span>.</span></div>
+      <div class="logo-sub">Portal nutricionista</div>
     </div>
   </div>
-  <div class="toolbar-actions">
-    <button class="tbtn tbtn-ghost" onclick="history.back()">← Volver al portal</button>
-    <button class="tbtn tbtn-primary" onclick="window.print()">Imprimir / Guardar PDF</button>
-  </div>
-</div>
-
-<div class="pages-wrap">
-
-<!-- ══════════════════════════════════
-     PÁGINA 1 — Datos generales, personales y antecedentes
-══════════════════════════════════ -->
-<div class="page">
-
-  <div class="page-header">
-    <div class="header-brand">
-      <div class="header-wordmark">Feel Better<span>.</span></div>
-      <div class="header-tagline">Nutrición · Portal profesional</div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)">
+      <i data-lucide="layout-dashboard"></i> Dashboard
     </div>
-    <div class="header-title">Resumen de cita</div>
-    <div class="header-meta">
-      <div class="header-case">CASO #00000003</div>
-      <div class="header-date">Lunes, 28 de Junio, 2026 · 9:47 AM</div>
+    <div class="nav-item" onclick="showPage('clientes',this)">
+      <i data-lucide="users"></i> Pacientes
+      <span class="nav-badge">24</span>
     </div>
-  </div>
-
-  <!-- Banner de caso -->
-  <div class="case-banner">
-    <div class="case-item">
-      <div class="case-key">Caso N°</div>
-      <div class="case-val mono">00000003</div>
+    <div class="nav-item" onclick="showPage('nueva',this)">
+      <i data-lucide="plus-circle"></i> Nueva consulta
     </div>
-    <div class="case-item">
-      <div class="case-key">Tipo de consulta</div>
-      <div class="case-val">Seguimiento mensual</div>
+    <div class="nav-section">Herramientas</div>
+    <div class="nav-item" onclick="showPage('agenda',this)">
+      <i data-lucide="calendar"></i> Agenda
     </div>
-    <div class="case-item">
-      <div class="case-key">Profesional</div>
-      <div class="case-val">Lic. Guillermo Flores</div>
+    <div class="nav-item" onclick="showToast('Módulo de reportes próximamente')">
+      <i data-lucide="bar-chart-2"></i> Reportes
     </div>
-    <div class="case-item">
-      <div class="case-key">ID profesional</div>
-      <div class="case-val mono">GF-30003612</div>
+    <div class="nav-item" onclick="showToast('Configuración próximamente')">
+      <i data-lucide="settings"></i> Configuración
     </div>
-  </div>
-
-  <!-- Datos personales -->
-  <div class="section-band">Datos personales del paciente</div>
-  <div class="section-body">
-    <div class="field-grid fg-4">
-      <div class="field-cell"><div class="field-key">Primer nombre</div><div class="field-val">Jorge</div></div>
-      <div class="field-cell"><div class="field-key">Segundo nombre</div><div class="field-val">Orlando</div></div>
-      <div class="field-cell"><div class="field-key">Primer apellido</div><div class="field-val">Gómez</div></div>
-      <div class="field-cell"><div class="field-key">Segundo apellido</div><div class="field-val">Márquez</div></div>
-      <div class="field-cell"><div class="field-key">DUI</div><div class="field-val mono">04599254</div></div>
-      <div class="field-cell"><div class="field-key">Fecha de nacimiento</div><div class="field-val">11/07/1992</div></div>
-      <div class="field-cell"><div class="field-key">Número de contacto</div><div class="field-val">2205-7777</div></div>
-      <div class="field-cell"><div class="field-key">Sexo</div><div class="field-val">Masculino</div></div>
-      <div class="field-cell"><div class="field-key">Correo electrónico</div><div class="field-val">jorge@gmail.com</div></div>
-      <div class="field-cell"><div class="field-key">Estado civil</div><div class="field-val">Soltero</div></div>
-      <div class="field-cell"><div class="field-key">Edad</div><div class="field-val">33 años</div></div>
-      <div class="field-cell"><div class="field-key">Ocupación</div><div class="field-val empty">No registrada</div></div>
-    </div>
-  </div>
-
-  <!-- Antecedentes -->
-  <div class="section-band">Antecedentes de enfermedades</div>
-  <div class="ante-wrap">
-    <div class="ante-item">
-      <div class="ante-q">¿Ha padecido o padece alguna enfermedad crónica?</div>
-      <div class="ante-a">No por el momento</div>
-    </div>
-    <div class="ante-item">
-      <div class="ante-q">¿Padece alguna otra enfermedad no crónica?</div>
-      <div class="ante-a">Asma leve</div>
-    </div>
-    <div class="ante-item">
-      <div class="ante-q">¿Ha recibido o se encuentra recibiendo algún tratamiento médico?</div>
-      <div class="ante-a">Terapias de oxígeno ocasionales</div>
-    </div>
-    <div class="ante-item">
-      <div class="ante-q">Alergias conocidas</div>
-      <div class="ante-a sin-dato">No registradas</div>
-    </div>
-    <div class="ante-item">
-      <div class="ante-q">Medicamentos actuales</div>
-      <div class="ante-a sin-dato">No registrados</div>
-    </div>
-  </div>
-
-  <!-- Estilo de vida -->
-  <div class="section-band">Estilo de vida</div>
-  <div class="ls-grid">
-    <div class="ls-card">
-      <div class="ls-key">Rutina de sueño</div>
-      <div class="ls-val">Duerme entre 11 pm y 7 am (aproximado, no definido)</div>
-    </div>
-    <div class="ls-card">
-      <div class="ls-key">Actividad física</div>
-      <div class="ls-val">Moderada — caminatas 2 a 3 veces por semana</div>
-    </div>
-    <div class="ls-card">
-      <div class="ls-key">Intolerancias alimentarias</div>
-      <div class="ls-val">Intolerante a la lactosa</div>
-    </div>
-    <div class="ls-card">
-      <div class="ls-key">Alimentos que no consume</div>
-      <div class="ls-val">Mariscos</div>
-    </div>
-    <div class="ls-card">
-      <div class="ls-key">Hábitos</div>
-      <div class="pill-row">
-        <span class="pill pill-no">No fuma</span>
-        <span class="pill pill-warm">Consume alcohol</span>
-        <span class="pill pill-no">No consume energizantes</span>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-row">
+      <div class="avatar-wrap">
+        <div class="avatar">GF</div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="user-info">
+        <div class="name">Guillermo Flores</div>
+        <div class="role">Nutricionista</div>
       </div>
     </div>
-    <div class="ls-card">
-      <div class="ls-key">Nivel de estrés referido</div>
-      <div class="ls-val">Moderado — trabajo con carga alta los martes y miércoles</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ══ DASHBOARD ══ -->
+<div id="page-dashboard" class="page active">
+  <div class="topbar">
+    <div class="topbar-title">¡Hola, Guillermo!</div>
+    <div style="display:flex;gap:var(--s-2)">
+      <button class="btn btn-secondary btn-sm" onclick="showPage('clientes',document.querySelectorAll('.nav-item')[1])">
+        <i data-lucide="search"></i> Buscar paciente
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="showPage('nueva',document.querySelectorAll('.nav-item')[2])">
+        <i data-lucide="plus"></i> Nueva consulta
+      </button>
     </div>
   </div>
-
-  <!-- Dieta actual -->
-  <div class="section-band">Dieta habitual de referencia</div>
-  <div class="dieta-wrap">
-    <div class="dieta-grid">
-      <div class="dg-h"></div>
-      <div class="dg-h">Desayuno</div>
-      <div class="dg-h">Almuerzo</div>
-      <div class="dg-h">Cena</div>
-      <div class="dg-h">Refrigerios</div>
-      <div class="dg-day">Días de semana</div>
-      <div class="dg-cell">Café con leche, pan con frijoles</div>
-      <div class="dg-cell">Arroz, frijoles, pollo, tortillas</div>
-      <div class="dg-cell">Sopa o recalentado del almuerzo</div>
-      <div class="dg-cell">Frutas ocasionales, a veces snacks de paquete</div>
-      <div class="dg-day">Fines de semana</div>
-      <div class="dg-cell">Huevos con plátano frito</div>
-      <div class="dg-cell">Comida familiar, pupusas, tamales</div>
-      <div class="dg-cell">Variado, más libre</div>
-      <div class="dg-cell">Más frecuente que entre semana</div>
+  <div class="content">
+    <div class="grid-4">
+      <div class="stat-card primary-card">
+        <div class="stat-overline"><i data-lucide="users"></i> Pacientes activos</div>
+        <div class="stat-number">24</div>
+        <div class="stat-sub">+3 este mes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-overline"><i data-lucide="calendar-check"></i> Consultas del mes</div>
+        <div class="stat-number">18</div>
+        <div class="stat-sub"><span class="stat-up">↑ 4</span> vs mes anterior</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-overline"><i data-lucide="trending-up"></i> Pacientes en meta</div>
+        <div class="stat-number">71%</div>
+        <div class="stat-sub">17 de 24 activos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-overline"><i data-lucide="clock"></i> Próximas citas</div>
+        <div class="stat-number">5</div>
+        <div class="stat-sub">Esta semana</div>
+      </div>
     </div>
-  </div>
 
-  <div class="page-footer">
-    <div class="footer-copy">Feel Better Nutrición · Portal Profesional · © 2026</div>
-    <div class="footer-conf"><div class="conf-dot"></div> Documento confidencial — uso exclusivo del profesional y paciente</div>
-    <div class="footer-page">Página 1 de 3</div>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════
-     PÁGINA 2 — Medidas, evolución y motivación
-══════════════════════════════════ -->
-<div class="page">
-
-  <div class="page-header">
-    <div class="header-brand">
-      <div class="header-wordmark">Feel Better<span>.</span></div>
-      <div class="header-tagline">Nutrición · Portal profesional</div>
+    <div class="alert alert-warning">
+      <i data-lucide="alert-triangle"></i>
+      <span><strong>2 pacientes</strong> no han registrado actividad en la app en más de 7 días — María García y Carlos Mendoza.</span>
     </div>
-    <div class="header-title">Resumen de cita</div>
-    <div class="header-meta">
-      <div class="header-case">CASO #00000003</div>
-      <div class="header-date">Jorge Gómez · Lunes, 28 de Junio, 2026</div>
-    </div>
-  </div>
 
-  <!-- Medidas -->
-  <div class="section-band">Estado actual y evolución de medidas</div>
-  <div class="medidas-wrap">
-    <table class="medidas-tbl">
-      <thead>
-        <tr>
-          <th>Medida</th>
-          <th class="th-prev">Meta</th>
-          <th class="th-prev">Consulta inicial<br><span style="font-weight:400;font-size:9px">28 abr 2026</span></th>
-          <th class="th-prev">Penúltima<br><span style="font-weight:400;font-size:9px">28 may 2026</span></th>
-          <th class="th-actual">Actual<br><span style="font-weight:400;font-size:9px">28 jun 2026</span></th>
-          <th>Δ vs anterior</th>
-          <th>Δ total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Peso (kg)</td>
-          <td class="td-meta">85,0</td>
-          <td class="td-prev">95,0</td>
-          <td class="td-prev">94,0</td>
-          <td class="td-actual">90,0</td>
-          <td><span class="delta-pos">▼ 4,0 kg</span></td>
-          <td><span class="delta-pos">▼ 5,0 kg</span></td>
-        </tr>
-        <tr>
-          <td>Talla (m)</td>
-          <td class="td-meta">—</td>
-          <td class="td-prev">1,85</td>
-          <td class="td-prev">1,85</td>
-          <td class="td-actual">1,85</td>
-          <td><span class="delta-neu">—</span></td>
-          <td><span class="delta-neu">—</span></td>
-        </tr>
-        <tr>
-          <td>Cintura (cm)</td>
-          <td class="td-meta">80,0</td>
-          <td class="td-prev">95,0</td>
-          <td class="td-prev">92,0</td>
-          <td class="td-actual">88,0</td>
-          <td><span class="delta-pos">▼ 4,0 cm</span></td>
-          <td><span class="delta-pos">▼ 7,0 cm</span></td>
-        </tr>
-        <tr>
-          <td>Cadera (cm)</td>
-          <td class="td-meta">90,0</td>
-          <td class="td-prev">102,0</td>
-          <td class="td-prev">100,0</td>
-          <td class="td-actual">97,0</td>
-          <td><span class="delta-pos">▼ 3,0 cm</span></td>
-          <td><span class="delta-pos">▼ 5,0 cm</span></td>
-        </tr>
-        <tr>
-          <td>Brazo (cm)</td>
-          <td class="td-meta">30,0</td>
-          <td class="td-prev">35,0</td>
-          <td class="td-prev">33,0</td>
-          <td class="td-actual">32,0</td>
-          <td><span class="delta-pos">▼ 1,0 cm</span></td>
-          <td><span class="delta-pos">▼ 3,0 cm</span></td>
-        </tr>
-        <tr>
-          <td>Pecho (cm)</td>
-          <td class="td-meta">90,0</td>
-          <td class="td-prev">100,0</td>
-          <td class="td-prev">98,0</td>
-          <td class="td-actual">95,0</td>
-          <td><span class="delta-pos">▼ 3,0 cm</span></td>
-          <td><span class="delta-pos">▼ 5,0 cm</span></td>
-        </tr>
-        <tr>
-          <td>Muslo (cm)</td>
-          <td class="td-meta">50,0</td>
-          <td class="td-prev">58,0</td>
-          <td class="td-prev">56,0</td>
-          <td class="td-actual">54,0</td>
-          <td><span class="delta-pos">▼ 2,0 cm</span></td>
-          <td><span class="delta-pos">▼ 4,0 cm</span></td>
-        </tr>
-        <tr class="imc-row">
-          <td>IMC</td>
-          <td class="td-meta">24,8</td>
-          <td class="td-prev">27,7</td>
-          <td class="td-prev">27,4</td>
-          <td class="td-actual">26,3</td>
-          <td><span class="delta-pos">▼ 1,1</span></td>
-          <td><span class="delta-pos">▼ 1,4</span></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Progreso chips -->
-    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center">
-      <span style="font-size:11px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em">Resumen de progreso:</span>
-      <span class="progress-badge positive">▼ 5 kg desde inicio</span>
-      <span class="progress-badge positive">▼ 7 cm cintura</span>
-      <span class="progress-badge positive">IMC: Sobrepeso → Normal</span>
-      <span style="background:var(--green-25);border:1px solid var(--green-200);border-radius:9999px;padding:3px 10px;font-size:11px;font-weight:600;color:var(--green-700)">
-        A 5 kg de la meta de 85 kg
-      </span>
-    </div>
-  </div>
-
-  <!-- Motivación y asesoría -->
-  <div class="section-band">Motivación y asesoría personalizada</div>
-  <div class="motiv-wrap">
-    <div class="motiv-grid">
-      <div class="motiv-card green">
-        <div class="motiv-key-dark">Motivación principal del paciente</div>
-        <div class="motiv-val-dark">Bajar de peso y mejorar su condición física para sentirse con más energía en el trabajo.</div>
-        <div style="margin-top:10px">
-          <div class="motiv-key-dark">Adherencia al plan</div>
-          <div class="motiv-val-dark">Alta — el paciente reporta seguir el plan el 80% de los días, con dificultades los fines de semana por comidas familiares.</div>
+    <div class="grid-dash">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Pacientes recientes</span>
+          <button class="btn btn-ghost btn-sm" onclick="showPage('clientes',document.querySelectorAll('.nav-item')[1])">Ver todos</button>
+        </div>
+        <div class="card-body">
+          <div class="list-row" onclick="showExpediente()">
+            <div class="client-av av1">JG</div>
+            <div class="row-info">
+              <div class="row-name">Jorge Orlando Gómez</div>
+              <div class="row-meta">DUI 04599254 · Última consulta 28/05/2026</div>
+            </div>
+            <div class="row-actions">
+              <span class="chip chip-mint">En meta</span>
+              <span class="chip chip-teal">App activa</span>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="client-av av2">MG</div>
+            <div class="row-info">
+              <div class="row-name">María Elena García</div>
+              <div class="row-meta">DUI 07823419 · Última consulta 15/05/2026</div>
+            </div>
+            <div class="row-actions">
+              <span class="chip chip-warm">Sin app</span>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="client-av av4">RL</div>
+            <div class="row-info">
+              <div class="row-name">Rosa Amelia López</div>
+              <div class="row-meta">DUI 03241788 · Última consulta 20/05/2026</div>
+            </div>
+            <div class="row-actions">
+              <span class="chip chip-mint">En meta</span>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="client-av av5">CM</div>
+            <div class="row-info">
+              <div class="row-name">Carlos Enrique Mendoza</div>
+              <div class="row-meta">DUI 09182734 · Última consulta 10/05/2026</div>
+            </div>
+            <div class="row-actions">
+              <span class="chip chip-sage" style="background:#FDECEA;color:#B71C1C">Sin registro</span>
+            </div>
+          </div>
+          <div class="list-row">
+            <div class="client-av av6">AS</div>
+            <div class="row-info">
+              <div class="row-name">Ana Sofía Sánchez</div>
+              <div class="row-meta">DUI 05674321 · Primera consulta pendiente</div>
+            </div>
+            <div class="row-actions">
+              <span class="chip chip-sage">Nueva</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="motiv-card light">
-        <div class="motiv-key-light">Asesoría personalizada del nutricionista</div>
-        <div class="motiv-val-light">El paciente reporta buena adherencia al plan. Se recomienda aumentar consumo de agua a 3 L diarios y mantener actividad física. Para los fines de semana, se sugiere hacer elecciones conscientes en comidas familiares sin eliminarlas completamente — el balance es clave.</div>
-        <div style="margin-top:8px">
-          <div class="motiv-key-light">Observaciones clínicas</div>
-          <div class="motiv-val-light">El asma leve no limita la actividad física. Se sugiere llevar inhalador en caminatas largas.</div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">Agenda de hoy</span></div>
+        <div class="card-body">
+          <div class="agenda-row"><div class="agenda-time">9:00</div><div class="agenda-dot dot-success"></div><div><div class="agenda-name">Jorge Gómez</div><div class="agenda-sub">Seguimiento mensual · Completada</div></div></div>
+          <div class="agenda-row"><div class="agenda-time">10:30</div><div class="agenda-dot dot-success"></div><div><div class="agenda-name">Rosa López</div><div class="agenda-sub">Control de peso · Completada</div></div></div>
+          <div class="agenda-row"><div class="agenda-time">2:00</div><div class="agenda-dot dot-warning"></div><div><div class="agenda-name">Ana Sánchez</div><div class="agenda-sub">Primera consulta · En espera</div></div></div>
+          <div class="agenda-row"><div class="agenda-time">4:00</div><div class="agenda-dot dot-warning"></div><div><div class="agenda-name">Luis Martínez</div><div class="agenda-sub">Seguimiento · Pendiente</div></div></div>
+          <div class="agenda-row"><div class="agenda-time">5:30</div><div class="agenda-dot dot-neutral"></div><div><div class="agenda-name">Slot disponible</div><div class="agenda-sub">Sin asignar</div></div></div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Próxima cita -->
-  <div class="section-band">Próxima cita</div>
-  <div style="padding:14px 32px 16px">
-    <div class="next-banner">
-      <div>
-        <div class="next-key">Fecha programada</div>
-        <div class="next-val">Lunes, 28 de Julio, 2026</div>
-      </div>
-      <div class="next-right">
-        <div class="next-label">Nutricionista asignado</div>
-        <div class="next-prof">Lic. Guillermo Alejandro Flores</div>
-        <div style="font-size:11px;color:var(--green-500);margin-top:2px">¡Sigue así, vas muy bien!</div>
+<!-- ══ CLIENTES ══ -->
+<div id="page-clientes" class="page">
+  <div class="topbar">
+    <div class="topbar-title">Pacientes</div>
+    <button class="btn btn-primary btn-sm" onclick="showPage('nueva',document.querySelectorAll('.nav-item')[2])">
+      <i data-lucide="plus"></i> Nueva consulta
+    </button>
+  </div>
+  <div class="content">
+    <div class="search-hero">
+      <p class="t-overline" style="margin-bottom:var(--s-2)">Buscar paciente</p>
+      <p class="t-h2" style="color:var(--green-950);margin-bottom:var(--s-2)">¿A quién atiendes hoy?</p>
+      <p class="t-body" style="color:var(--ink-500);margin-bottom:var(--s-5)">Ingresa el DUI o nombre para acceder al expediente</p>
+      <div class="search-box">
+        <div class="search-input-wrap">
+          <i data-lucide="search"></i>
+          <input class="search-field" placeholder="DUI o nombre del paciente..." id="searchInput" oninput="filterClients(this.value)">
+        </div>
+        <button class="btn btn-primary" onclick="showExpediente()">Buscar</button>
       </div>
     </div>
-  </div>
-
-  <div class="page-footer">
-    <div class="footer-copy">Feel Better Nutrición · Portal Profesional · © 2026</div>
-    <div class="footer-conf"><div class="conf-dot"></div> Documento confidencial — uso exclusivo del profesional y paciente</div>
-    <div class="footer-page">Página 2 de 3</div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Todos los pacientes</span>
+        <span class="t-caption">24 pacientes</span>
+      </div>
+      <div class="card-body" id="clientList">
+        <div class="list-row" onclick="showExpediente()">
+          <div class="client-av av1">JG</div>
+          <div class="row-info"><div class="row-name">Jorge Orlando Gómez Márquez</div><div class="row-meta">DUI 04599254 · 32 años · Masculino</div></div>
+          <div class="row-actions"><span class="chip chip-mint">Activo</span><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();showExpediente()">Ver expediente</button></div>
+        </div>
+        <div class="list-row">
+          <div class="client-av av2">MG</div>
+          <div class="row-info"><div class="row-name">María Elena García Flores</div><div class="row-meta">DUI 07823419 · 28 años · Femenino</div></div>
+          <div class="row-actions"><span class="chip chip-warm">Sin app</span><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation()">Ver expediente</button></div>
+        </div>
+        <div class="list-row">
+          <div class="client-av av4">RL</div>
+          <div class="row-info"><div class="row-name">Rosa Amelia López Vásquez</div><div class="row-meta">DUI 03241788 · 45 años · Femenino</div></div>
+          <div class="row-actions"><span class="chip chip-mint">Activo</span><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation()">Ver expediente</button></div>
+        </div>
+        <div class="list-row">
+          <div class="client-av av5">CM</div>
+          <div class="row-info"><div class="row-name">Carlos Enrique Mendoza Rivas</div><div class="row-meta">DUI 09182734 · 38 años · Masculino</div></div>
+          <div class="row-actions"><span class="chip chip-sage">Inactivo</span><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation()">Ver expediente</button></div>
+        </div>
+        <div class="list-row">
+          <div class="client-av av6">AS</div>
+          <div class="row-info"><div class="row-name">Ana Sofía Sánchez Pérez</div><div class="row-meta">DUI 05674321 · 24 años · Femenino</div></div>
+          <div class="row-actions"><span class="chip chip-sage">Nueva</span><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation()">Ver expediente</button></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     PÁGINA 3 — Plan de alimentación semanal
-══════════════════════════════════ -->
-<div class="page">
-
-  <div class="page-header">
-    <div class="header-brand">
-      <div class="header-wordmark">Feel Better<span>.</span></div>
-      <div class="header-tagline">Nutrición · Portal profesional</div>
-    </div>
-    <div class="header-title">Resumen de cita</div>
-    <div class="header-meta">
-      <div class="header-case">CASO #00000003</div>
-      <div class="header-date">Jorge Gómez · Lunes, 28 de Junio, 2026</div>
+<!-- ══ EXPEDIENTE ══ -->
+<div id="page-expediente" class="page">
+  <div class="topbar">
+    <div class="topbar-title">Pacientes <span class="breadcrumb">›</span> Jorge Gómez</div>
+    <div style="display:flex;gap:var(--s-2)">
+      <button class="btn btn-secondary btn-sm" onclick="openResumen()">
+        <i data-lucide="mail"></i> Enviar resumen
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="showPage('nueva',document.querySelectorAll('.nav-item')[2])">
+        <i data-lucide="plus"></i> Nueva consulta
+      </button>
     </div>
   </div>
-
-  <div class="section-band">Plan de alimentación semanal — julio 2026</div>
-
-  <div style="padding:14px 32px 8px">
-    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <span class="pill pill-yes">Desayuno</span>
-      <span class="pill pill-teal">Almuerzo</span>
-      <span class="pill" style="background:var(--green-100);color:var(--green-800)">Cena</span>
-      <span class="pill pill-warm">Meriendas</span>
-      <span style="font-size:11px;color:var(--ink-500);margin-left:4px;align-self:center">· Recuerda: sin lactosa · sin mariscos · 3 L de agua al día</span>
-    </div>
-  </div>
-
-  <div style="padding:0 32px 14px">
-    <div style="display:grid;grid-template-columns:64px 1fr 1fr 1fr 1fr;gap:1px;background:var(--green-200);border-radius:10px;overflow:hidden">
-      <!-- Header -->
-      <div style="background:var(--green-700);padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:white"></div>
-      <div style="background:var(--green-700);padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:white">Desayuno</div>
-      <div style="background:var(--green-700);padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:white">Almuerzo</div>
-      <div style="background:var(--green-700);padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:white">Cena</div>
-      <div style="background:var(--green-700);padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:white">Meriendas</div>
-
-      <!-- Lunes -->
-      <div class="dg-day" style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);justify-content:center;font-size:10px;font-weight:700;color:var(--green-800);background:var(--green-50);padding:8px 6px">LUNES</div>
-      <div class="dg-cell">Avena con frutas y semillas de chía. Vaso de agua con limón.</div>
-      <div class="dg-cell">Arroz integral, pechuga a la plancha con hierbas, ensalada verde con aceite de oliva.</div>
-      <div class="dg-cell">Sopa de verduras, tortilla integral tostada.</div>
-      <div class="dg-cell">Manzana verde, 10 nueces.</div>
-
-      <!-- Martes -->
-      <div class="dg-day" style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);justify-content:center;font-size:10px;font-weight:700;color:var(--green-800);background:var(--green-50);padding:8px 6px">MARTES</div>
-      <div class="dg-cell">2 huevos revueltos con espinaca, pan integral tostado, jugo de naranja natural.</div>
-      <div class="dg-cell">Frijoles negros, 2 tortillas integrales, pollo asado, aguacate (½).</div>
-      <div class="dg-cell">Ensalada de atún con tomate y pepino, pan integral.</div>
-      <div class="dg-cell">Yogur de coco natural sin azúcar (sustituye lácteo).</div>
-
-      <!-- Miércoles -->
-      <div class="dg-day" style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);justify-content:center;font-size:10px;font-weight:700;color:var(--green-800);background:var(--green-50);padding:8px 6px">MIÉRC.</div>
-      <div class="dg-cell">Yogur de almendra con granola sin azúcar, berries mixtos.</div>
-      <div class="dg-cell">Pasta integral con res a la plancha y brócoli al vapor con ajo.</div>
-      <div class="dg-cell">Caldo de pollo con vegetales y fideos integrales.</div>
-      <div class="dg-cell">Zanahoria con hummus de garbanzo (2 cucharadas).</div>
-
-      <!-- Jueves -->
-      <div class="dg-day" style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);justify-content:center;font-size:10px;font-weight:700;color:var(--green-800);background:var(--green-50);padding:8px 6px">JUEVES</div>
-      <div class="dg-cell">Avena con plátano maduro y miel natural, café negro.</div>
-      <div class="dg-cell">Arroz integral, lentejas guisadas, pollo al horno con limón.</div>
-      <div class="dg-cell">Sopa de frijoles, tortilla integral.</div>
-      <div class="dg-cell">Pepino con limón y chile en polvo.</div>
-
-      <!-- Viernes -->
-      <div class="dg-day" style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);justify-content:center;font-size:10px;font-weight:700;color:var(--green-800);background:var(--green-50);padding:8px 6px">VIERNES</div>
-      <div class="dg-cell">Licuado de espinaca, mango, plátano y proteína de guisante.</div>
-      <div class="dg-cell">Filete de pescado a la plancha, arroz integral, ensalada de tomate y cebolla.</div>
-      <div class="dg-cell">Tacos de lechuga con pavo molido y salsa de tomate natural.</div>
-      <div class="dg-cell">Fresas naturales (1 taza).</div>
-
-      <!-- Sábado -->
-      <div class="dg-day" style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);justify-content:center;font-size:10px;font-weight:700;color:var(--green-800);background:var(--green-50);padding:8px 6px">SÁBADO</div>
-      <div class="dg-cell">Panqueques de avena (2) con miel pura y plátano en rodajas.</div>
-      <div class="dg-cell">Pollo a la naranja con arroz integral y vegetales salteados.</div>
-      <div class="dg-cell">Pizza integral casera con vegetales y queso vegano, ensalada.</div>
-      <div class="dg-cell">Palomitas de maíz sin mantequilla (1 taza).</div>
-
-      <!-- Domingo -->
-      <div class="dg-day" style="writing-mode:vertical-rl;text-orientation:mixed;transform:rotate(180deg);justify-content:center;font-size:10px;font-weight:700;color:var(--green-800);background:var(--green-50);padding:8px 6px">DOMINGO</div>
-      <div class="dg-cell">Huevos benedictinos con pan integral y aguacate (sin holandesa).</div>
-      <div class="dg-cell">Res estofada con vegetales, puré de papa natural. Elección consciente en familia.</div>
-      <div class="dg-cell">Caldo tlalpeño light, tortilla integral.</div>
-      <div class="dg-cell">Rebanada de melón o papaya.</div>
-    </div>
-
-    <!-- Notas del plan -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px">
-      <div style="background:var(--green-25);border-radius:8px;padding:10px 12px;border:1px solid var(--green-100)">
-        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--green-700);margin-bottom:4px">Hidratación</div>
-        <div style="font-size:12px;color:var(--ink-800)">Mínimo <strong>3 L de agua</strong> al día. Comenzar cada mañana con un vaso de agua antes del desayuno.</div>
-      </div>
-      <div style="background:var(--green-25);border-radius:8px;padding:10px 12px;border:1px solid var(--green-100)">
-        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--green-700);margin-bottom:4px">Recordatorio — sin lactosa</div>
-        <div style="font-size:12px;color:var(--ink-800)">Sustituir leche y yogur por versiones vegetales (coco, almendra, avena). Revisar etiquetas de pan y embutidos.</div>
-      </div>
-      <div style="background:var(--teal-200);border-radius:8px;padding:10px 12px;border:1px solid var(--teal-700)">
-        <div style="font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--teal-700);margin-bottom:4px">Actividad física sugerida</div>
-        <div style="font-size:12px;color:var(--ink-800)">Mantener caminatas 3x/semana. Subir a 4x en julio. Llevar inhalador en salidas largas.</div>
+  <div class="content">
+    <div class="exp-header-card">
+      <div class="exp-avatar">JG</div>
+      <div style="flex:1;min-width:0">
+        <div class="exp-name">Jorge Orlando Gómez Márquez</div>
+        <div class="exp-chips">
+          <span class="chip chip-mint">Activo</span>
+          <span class="chip chip-teal">App conectada</span>
+          <span class="chip chip-sage">3 consultas</span>
+        </div>
+        <div class="exp-meta">
+          <span class="exp-meta-item"><i data-lucide="credit-card"></i> 04599254</span>
+          <span class="exp-meta-item"><i data-lucide="cake"></i> 11/07/1992 · 32 años</span>
+          <span class="exp-meta-item"><i data-lucide="phone"></i> 2205-7777</span>
+          <span class="exp-meta-item"><i data-lucide="mail"></i> jorge@gmail.com</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="page-footer">
-    <div class="footer-copy">Feel Better Nutrición · Portal Profesional · © 2026</div>
-    <div class="footer-conf"><div class="conf-dot"></div> Documento confidencial — uso exclusivo del profesional y paciente</div>
-    <div class="footer-page">Página 3 de 3</div>
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('tc-medidas',this)">Medidas y evolución</div>
+      <div class="tab" onclick="switchTab('tc-historial',this)">Historial</div>
+      <div class="tab" onclick="switchTab('tc-plan',this)">Plan alimenticio</div>
+      <div class="tab" onclick="switchTab('tc-clinico',this)">Historia clínica</div>
+    </div>
+
+    <!-- TAB MEDIDAS -->
+    <div id="tc-medidas" class="tab-content active">
+      <div class="alert alert-success">
+        <i data-lucide="check-circle"></i>
+        <span>Jorge ha perdido <strong>5 kg</strong> en 3 consultas. Está a 5 kg de su meta de 85 kg. ¡Excelente progreso!</span>
+      </div>
+      <div class="section-card">
+        <div class="section-heading"><i data-lucide="activity"></i> Evolución de medidas — 3 consultas</div>
+        <table class="medidas-table">
+          <thead>
+            <tr>
+              <th>Medida</th>
+              <th class="th-meta">Meta</th>
+              <th class="th-meta">S-2 · 28 abr</th>
+              <th class="th-meta">S-1 · 28 may</th>
+              <th class="th-actual">Actual · 28 jun</th>
+              <th>Δ vs S-1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Peso (kg)</td><td class="td-meta">85</td><td class="td-meta">95</td><td class="td-meta">94</td><td class="td-actual">90</td><td><span class="delta-pos">▼ 4 kg</span></td></tr>
+            <tr><td>Talla (m)</td><td class="td-meta">—</td><td class="td-meta">1,85</td><td class="td-meta">1,85</td><td class="td-actual">1,85</td><td>—</td></tr>
+            <tr><td>Cintura (cm)</td><td class="td-meta">80</td><td class="td-meta">95</td><td class="td-meta">92</td><td class="td-actual">88</td><td><span class="delta-pos">▼ 4 cm</span></td></tr>
+            <tr><td>Cadera (cm)</td><td class="td-meta">90</td><td class="td-meta">102</td><td class="td-meta">100</td><td class="td-actual">97</td><td><span class="delta-pos">▼ 3 cm</span></td></tr>
+            <tr><td>Brazo (cm)</td><td class="td-meta">30</td><td class="td-meta">35</td><td class="td-meta">33</td><td class="td-actual">32</td><td><span class="delta-pos">▼ 1 cm</span></td></tr>
+            <tr><td>Pecho (cm)</td><td class="td-meta">90</td><td class="td-meta">100</td><td class="td-meta">98</td><td class="td-actual">95</td><td><span class="delta-pos">▼ 3 cm</span></td></tr>
+            <tr><td>Muslo (cm)</td><td class="td-meta">50</td><td class="td-meta">58</td><td class="td-meta">56</td><td class="td-actual">54</td><td><span class="delta-pos">▼ 2 cm</span></td></tr>
+            <tr><td>IMC</td><td class="td-meta">24,8</td><td class="td-meta">27,7</td><td class="td-meta">27,4</td><td class="td-actual">26,3</td><td><span class="delta-pos">▼ 1,1</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="section-card">
+        <div class="section-heading"><i data-lucide="bar-chart"></i> Progreso hacia la meta</div>
+        <div class="progress-wrap"><div class="progress-label"><span>Peso</span><span>90 kg / meta 85 kg</span></div><div class="progress-track"><div class="progress-fill" style="width:56%"></div></div></div>
+        <div class="progress-wrap"><div class="progress-label"><span>Cintura</span><span>88 cm / meta 80 cm</span></div><div class="progress-track"><div class="progress-fill" style="width:47%"></div></div></div>
+        <div class="progress-wrap"><div class="progress-label"><span>Cadera</span><span>97 cm / meta 90 cm</span></div><div class="progress-track"><div class="progress-fill" style="width:58%"></div></div></div>
+      </div>
+    </div>
+
+    <!-- TAB HISTORIAL -->
+    <div id="tc-historial" class="tab-content">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Historial de consultas</span></div>
+        <div class="card-body">
+          <div class="consulta-row" onclick="openResumen()">
+            <div class="consulta-num">#00000003</div>
+            <div class="consulta-info"><div class="consulta-fecha">Lunes, 28 de Junio · 9:47 AM</div><div class="consulta-sub">Seguimiento · Guillermo Flores</div></div>
+            <span class="chip chip-mint">Completa</span>
+            <div class="consulta-delta"><div class="delta-pos" style="font-size:14px;font-weight:700">▼ 4 kg</div><div class="delta-label">desde anterior</div></div>
+          </div>
+          <div class="consulta-row" onclick="showToast('Abriendo consulta #00000002...')">
+            <div class="consulta-num">#00000002</div>
+            <div class="consulta-info"><div class="consulta-fecha">Martes, 28 de Mayo · 9:47 AM</div><div class="consulta-sub">Seguimiento · Guillermo Flores</div></div>
+            <span class="chip chip-mint">Completa</span>
+            <div class="consulta-delta"><div class="delta-pos" style="font-size:14px;font-weight:700">▼ 1 kg</div><div class="delta-label">desde anterior</div></div>
+          </div>
+          <div class="consulta-row" onclick="showToast('Abriendo consulta #00000001...')">
+            <div class="consulta-num">#00000001</div>
+            <div class="consulta-info"><div class="consulta-fecha">Domingo, 28 de Abril · 2:15 PM</div><div class="consulta-sub">Primera consulta · Guillermo Flores</div></div>
+            <span class="chip chip-sage">Inicial</span>
+            <div class="consulta-delta"><div style="font-size:14px;font-weight:700;color:var(--ink-500)">95 kg</div><div class="delta-label">peso inicial</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB PLAN -->
+    <div id="tc-plan" class="tab-content">
+      <div class="section-card">
+        <div class="section-heading"><i data-lucide="salad"></i> Plan de alimentación — junio 2026</div>
+        <table class="plan-table">
+          <thead><tr><th></th><th>Desayuno</th><th>Almuerzo</th><th>Cena</th><th>Meriendas</th></tr></thead>
+          <tbody>
+            <tr><td>L</td><td>Avena con frutas y semillas de chía</td><td>Arroz integral, pechuga a la plancha, ensalada verde</td><td>Sopa de verduras, tortilla integral</td><td>Manzana, nueces</td></tr>
+            <tr><td>Ma</td><td>Huevos revueltos (2), pan integral</td><td>Frijoles negros, tortillas, pollo asado, aguacate</td><td>Ensalada de atún, pan integral</td><td>Yogur natural sin azúcar</td></tr>
+            <tr><td>Mi</td><td>Yogur con granola sin azúcar, berries</td><td>Pasta integral, res a la plancha, brócoli al vapor</td><td>Caldo de pollo, vegetales</td><td>Zanahoria con hummus</td></tr>
+            <tr><td>J</td><td>Avena con plátano y miel</td><td>Arroz integral, lentejas, pollo al horno</td><td>Sopa de frijoles, tortilla integral</td><td>Pepino con limón</td></tr>
+            <tr><td>V</td><td>Licuado de espinaca, mango y proteína</td><td>Pescado a la plancha, arroz, ensalada</td><td>Tacos de lechuga con pavo</td><td>Fresas naturales</td></tr>
+            <tr><td>S</td><td>Panqueques de avena, miel pura</td><td>Pollo a la naranja, arroz, vegetales</td><td>Pizza integral casera, ensalada</td><td>Palomitas sin mantequilla</td></tr>
+            <tr><td>D</td><td>Huevos con pan integral</td><td>Res estofada, puré de papa, vegetales</td><td>Caldo tlalpeño light</td><td>Rebanada de melón</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB CLÍNICO -->
+    <div id="tc-clinico" class="tab-content">
+      <div class="grid-2" style="margin-bottom:var(--s-4)">
+        <div class="section-card">
+          <div class="section-heading"><i data-lucide="file-heart"></i> Antecedentes</div>
+          <div class="field-row"><div class="field-label">Enfermedades crónicas</div><div class="field-value">No por el momento</div></div>
+          <div class="field-row"><div class="field-label">Enfermedades no crónicas</div><div class="field-value">Asma leve</div></div>
+          <div class="field-row"><div class="field-label">Tratamiento médico</div><div class="field-value">Terapias de oxígeno ocasionales</div></div>
+        </div>
+        <div class="section-card">
+          <div class="section-heading"><i data-lucide="heart-pulse"></i> Estilo de vida</div>
+          <div class="field-row"><div class="field-label">Rutina de sueño</div><div class="field-value">Duerme entre 11 pm y 7 am</div></div>
+          <div class="field-row"><div class="field-label">Actividad física</div><div class="field-value">Moderada — caminatas 2-3 veces/semana</div></div>
+          <div class="field-row"><div class="field-label">Intolerancias</div><div class="field-value">Intolerante a la lactosa</div></div>
+          <div class="field-row"><div class="field-label">No consume</div><div class="field-value">Mariscos</div></div>
+          <div class="field-row"><div class="field-label">Fuma / Alcohol</div><div class="field-value">No fuma · Sí consume alcohol</div></div>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-heading"><i data-lucide="utensils"></i> Dieta de referencia</div>
+        <div class="grid-2">
+          <div>
+            <p style="font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-500);margin-bottom:var(--s-3)">Días de semana</p>
+            <div class="field-row"><div class="field-label">Desayuno</div><div class="field-value">Café con leche, pan con frijoles</div></div>
+            <div class="field-row"><div class="field-label">Almuerzo</div><div class="field-value">Arroz, frijoles, pollo, tortillas</div></div>
+            <div class="field-row"><div class="field-label">Cena</div><div class="field-value">Sopa o recalentado</div></div>
+          </div>
+          <div>
+            <p style="font-size:12px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-500);margin-bottom:var(--s-3)">Fines de semana</p>
+            <div class="field-row"><div class="field-label">Desayuno</div><div class="field-value">Huevos con plátano frito</div></div>
+            <div class="field-row"><div class="field-label">Almuerzo</div><div class="field-value">Comida familiar, pupusas</div></div>
+            <div class="field-row"><div class="field-label">Cena</div><div class="field-value">Variado, más libre</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-</div><!-- /pages-wrap -->
+<!-- ══ NUEVA CONSULTA — WIZARD ══ -->
+<div id="page-nueva" class="page">
+  <div class="topbar">
+    <div class="topbar-title">Nueva consulta</div>
+    <button class="btn btn-ghost btn-sm" onclick="showPage('dashboard',document.querySelector('.nav-item'))">Cancelar</button>
+  </div>
+  <div class="content">
+    <div class="section-card" style="margin-bottom:var(--s-5)">
+      <div class="wizard-steps" id="wizardSteps"></div>
+    </div>
+    <div id="wizardContent"></div>
+    <div class="form-nav">
+      <button class="btn btn-secondary" id="btnPrev" onclick="wizardPrev()" style="display:none">
+        <i data-lucide="arrow-left"></i> Anterior
+      </button>
+      <span class="step-counter" id="stepCounter"></span>
+      <button class="btn btn-primary" id="btnNext" onclick="wizardNext()">
+        Continuar <i data-lucide="arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ AGENDA ══ -->
+<div id="page-agenda" class="page">
+  <div class="topbar">
+    <div class="topbar-title">Agenda — Mayo 2026</div>
+    <button class="btn btn-primary btn-sm" onclick="showToast('Nueva cita próximamente')">
+      <i data-lucide="plus"></i> Nueva cita
+    </button>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="card-header"><span class="card-title">Esta semana</span></div>
+      <div class="card-body">
+        <div class="agenda-row"><div class="agenda-time">Lun</div><div class="agenda-dot dot-success"></div><div><div class="agenda-name">Jorge Gómez — 9:00 AM</div><div class="agenda-sub">Seguimiento mensual · Completada</div></div></div>
+        <div class="agenda-row"><div class="agenda-time">Lun</div><div class="agenda-dot dot-success"></div><div><div class="agenda-name">Rosa López — 10:30 AM</div><div class="agenda-sub">Control de peso · Completada</div></div></div>
+        <div class="agenda-row"><div class="agenda-time">Mar</div><div class="agenda-dot dot-warning"></div><div><div class="agenda-name">Ana Sánchez — 2:00 PM</div><div class="agenda-sub">Primera consulta · Pendiente</div></div></div>
+        <div class="agenda-row"><div class="agenda-time">Mié</div><div class="agenda-dot dot-warning"></div><div><div class="agenda-name">Luis Martínez — 4:00 PM</div><div class="agenda-sub">Seguimiento · Pendiente</div></div></div>
+        <div class="agenda-row"><div class="agenda-time">Vie</div><div class="agenda-dot dot-warning"></div><div><div class="agenda-name">María García — 11:00 AM</div><div class="agenda-sub">Control mensual · Pendiente</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- ══ RESUMEN OVERLAY ══ -->
+<div class="resumen-overlay" id="resumenOverlay">
+  <div class="resumen-toolbar">
+    <div class="resumen-toolbar-brand">
+      <div class="logo-wordmark">Feel Better<span>.</span></div>
+      <div class="resumen-toolbar-doc">Resumen de cita #00000003 · Jorge Gómez</div>
+    </div>
+    <div class="resumen-toolbar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeResumen()" style="color:rgba(255,255,255,.7)">
+        <i data-lucide="arrow-left"></i> Volver al portal
+      </button>
+      <button class="btn btn-secondary btn-sm" onclick="showToast('Correo enviado a jorge@gmail.com y al nutricionista')">
+        <i data-lucide="mail"></i> Enviar por correo
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="window.print()">
+        <i data-lucide="printer"></i> Imprimir / PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="resumen-pages">
+
+    <!-- PÁGINA 1 -->
+    <div class="rpage">
+      <div class="rpage-header">
+        <div class="rh-brand"><div class="rh-wordmark">Feel Better<span>.</span></div><div class="rh-tagline">Nutrición · Portal profesional</div></div>
+        <div class="rh-title">Resumen de cita</div>
+        <div class="rh-meta"><div class="rh-case">CASO #00000003</div><div class="rh-date">Lunes, 28 de Junio, 2026 · 9:47 AM</div></div>
+      </div>
+      <div class="rcase-banner">
+        <div class="rcb-item"><div class="rcb-k">Caso N°</div><div class="rcb-v" style="font-family:monospace;font-size:12px">00000003</div></div>
+        <div class="rcb-item"><div class="rcb-k">Tipo de consulta</div><div class="rcb-v">Seguimiento mensual</div></div>
+        <div class="rcb-item"><div class="rcb-k">Profesional</div><div class="rcb-v">Lic. Guillermo Flores</div></div>
+        <div class="rcb-item"><div class="rcb-k">ID profesional</div><div class="rcb-v" style="font-family:monospace;font-size:12px">GF-30003612</div></div>
+      </div>
+      <div class="rband">Datos personales del paciente</div>
+      <div class="rbody">
+        <div class="rcb rcb-4">
+          <div class="rfield"><div class="rfield-k">Primer nombre</div><div class="rfield-v">Jorge</div></div>
+          <div class="rfield"><div class="rfield-k">Segundo nombre</div><div class="rfield-v">Orlando</div></div>
+          <div class="rfield"><div class="rfield-k">Primer apellido</div><div class="rfield-v">Gómez</div></div>
+          <div class="rfield"><div class="rfield-k">Segundo apellido</div><div class="rfield-v">Márquez</div></div>
+          <div class="rfield"><div class="rfield-k">DUI</div><div class="rfield-v mono">04599254</div></div>
+          <div class="rfield"><div class="rfield-k">Fecha de nacimiento</div><div class="rfield-v">11/07/1992</div></div>
+          <div class="rfield"><div class="rfield-k">Número de contacto</div><div class="rfield-v">2205-7777</div></div>
+          <div class="rfield"><div class="rfield-k">Sexo</div><div class="rfield-v">Masculino</div></div>
+          <div class="rfield"><div class="rfield-k">Correo electrónico</div><div class="rfield-v">jorge@gmail.com</div></div>
+          <div class="rfield"><div class="rfield-k">Estado civil</div><div class="rfield-v">Soltero</div></div>
+          <div class="rfield"><div class="rfield-k">Edad</div><div class="rfield-v">33 años</div></div>
+          <div class="rfield"><div class="rfield-k">Ocupación</div><div class="rfield-v empty">No registrada</div></div>
+        </div>
+      </div>
+      <div class="rband">Antecedentes de enfermedades</div>
+      <div class="rante-wrap">
+        <div class="rante"><div class="rante-q">¿Ha padecido o padece alguna enfermedad crónica?</div><div class="rante-a">No por el momento</div></div>
+        <div class="rante"><div class="rante-q">¿Padece alguna otra enfermedad no crónica?</div><div class="rante-a">Asma leve</div></div>
+        <div class="rante"><div class="rante-q">¿Ha recibido o se encuentra recibiendo algún tratamiento médico?</div><div class="rante-a">Terapias de oxígeno ocasionales</div></div>
+        <div class="rante"><div class="rante-q">Alergias conocidas</div><div class="rante-a empty">No registradas</div></div>
+        <div class="rante"><div class="rante-q">Medicamentos actuales</div><div class="rante-a empty">No registrados</div></div>
+      </div>
+      <div class="rband">Estilo de vida</div>
+      <div class="rls-grid">
+        <div class="rls-card"><div class="rls-k">Rutina de sueño</div><div class="rls-v">Duerme entre 11 pm y 7 am (aproximado, no definido)</div></div>
+        <div class="rls-card"><div class="rls-k">Actividad física</div><div class="rls-v">Moderada — caminatas 2 a 3 veces por semana</div></div>
+        <div class="rls-card"><div class="rls-k">Intolerancias alimentarias</div><div class="rls-v">Intolerante a la lactosa</div></div>
+        <div class="rls-card"><div class="rls-k">Alimentos que no consume</div><div class="rls-v">Mariscos</div></div>
+        <div class="rls-card"><div class="rls-k">Hábitos</div><div class="rpill-row"><span class="rpill rpill-no">No fuma</span><span class="rpill rpill-warm">Consume alcohol</span><span class="rpill rpill-no">No consume energizantes</span></div></div>
+        <div class="rls-card"><div class="rls-k">Nivel de estrés referido</div><div class="rls-v">Moderado — carga alta los martes y miércoles</div></div>
+      </div>
+      <div class="rband">Dieta habitual de referencia</div>
+      <div class="rdieta-wrap">
+        <div class="rdieta">
+          <div class="rdh"></div><div class="rdh">Desayuno</div><div class="rdh">Almuerzo</div><div class="rdh">Cena</div><div class="rdh">Refrigerios</div>
+          <div class="rdday">Días de semana</div>
+          <div class="rdcell">Café con leche, pan con frijoles</div>
+          <div class="rdcell">Arroz, frijoles, pollo, tortillas</div>
+          <div class="rdcell">Sopa o recalentado</div>
+          <div class="rdcell">Frutas ocasionales, snacks de paquete</div>
+          <div class="rdday">Fines de semana</div>
+          <div class="rdcell">Huevos con plátano frito</div>
+          <div class="rdcell">Comida familiar, pupusas</div>
+          <div class="rdcell">Variado, más libre</div>
+          <div class="rdcell">Más frecuente que entre semana</div>
+        </div>
+      </div>
+      <div class="rpage-footer">
+        <div class="rfoot-copy">Feel Better Nutrición · Portal Profesional · © 2026</div>
+        <div class="rfoot-conf"><div class="rfoot-dot"></div> Documento confidencial</div>
+        <div class="rfoot-page">Página 1 de 3</div>
+      </div>
+    </div>
+
+    <!-- PÁGINA 2 -->
+    <div class="rpage">
+      <div class="rpage-header">
+        <div class="rh-brand"><div class="rh-wordmark">Feel Better<span>.</span></div><div class="rh-tagline">Nutrición · Portal profesional</div></div>
+        <div class="rh-title">Resumen de cita</div>
+        <div class="rh-meta"><div class="rh-case">CASO #00000003</div><div class="rh-date">Jorge Gómez · 28 de Junio, 2026</div></div>
+      </div>
+      <div class="rband">Estado actual y evolución de medidas</div>
+      <div class="rmed-wrap">
+        <table class="rmed-tbl">
+          <thead>
+            <tr>
+              <th>Medida</th>
+              <th class="rth-prev">Meta</th>
+              <th class="rth-prev">Inicial · 28 abr</th>
+              <th class="rth-prev">S-1 · 28 may</th>
+              <th class="rth-act">Actual · 28 jun</th>
+              <th>Δ vs anterior</th>
+              <th>Δ total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Peso (kg)</td><td class="rtd-meta">85,0</td><td class="rtd-prev">95,0</td><td class="rtd-prev">94,0</td><td class="rtd-act">90,0</td><td><span class="rdpos">▼ 4,0 kg</span></td><td><span class="rdpos">▼ 5,0 kg</span></td></tr>
+            <tr><td>Talla (m)</td><td class="rtd-meta">—</td><td class="rtd-prev">1,85</td><td class="rtd-prev">1,85</td><td class="rtd-act">1,85</td><td><span class="rdneu">—</span></td><td><span class="rdneu">—</span></td></tr>
+            <tr><td>Cintura (cm)</td><td class="rtd-meta">80,0</td><td class="rtd-prev">95,0</td><td class="rtd-prev">92,0</td><td class="rtd-act">88,0</td><td><span class="rdpos">▼ 4,0 cm</span></td><td><span class="rdpos">▼ 7,0 cm</span></td></tr>
+            <tr><td>Cadera (cm)</td><td class="rtd-meta">90,0</td><td class="rtd-prev">102,0</td><td class="rtd-prev">100,0</td><td class="rtd-act">97,0</td><td><span class="rdpos">▼ 3,0 cm</span></td><td><span class="rdpos">▼ 5,0 cm</span></td></tr>
+            <tr><td>Brazo (cm)</td><td class="rtd-meta">30,0</td><td class="rtd-prev">35,0</td><td class="rtd-prev">33,0</td><td class="rtd-act">32,0</td><td><span class="rdpos">▼ 1,0 cm</span></td><td><span class="rdpos">▼ 3,0 cm</span></td></tr>
+            <tr><td>Pecho (cm)</td><td class="rtd-meta">90,0</td><td class="rtd-prev">100,0</td><td class="rtd-prev">98,0</td><td class="rtd-act">95,0</td><td><span class="rdpos">▼ 3,0 cm</span></td><td><span class="rdpos">▼ 5,0 cm</span></td></tr>
+            <tr><td>Muslo (cm)</td><td class="rtd-meta">50,0</td><td class="rtd-prev">58,0</td><td class="rtd-prev">56,0</td><td class="rtd-act">54,0</td><td><span class="rdpos">▼ 2,0 cm</span></td><td><span class="rdpos">▼ 4,0 cm</span></td></tr>
+            <tr class="rimc-row"><td>IMC</td><td class="rtd-meta">24,8</td><td class="rtd-prev">27,7</td><td class="rtd-prev">27,4</td><td class="rtd-act">26,3</td><td><span class="rdpos">▼ 1,1</span></td><td><span class="rdpos">▼ 1,4</span></td></tr>
+          </tbody>
+        </table>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center">
+          <span style="font-size:11px;font-weight:600;color:var(--ink-500);text-transform:uppercase;letter-spacing:.06em">Progreso:</span>
+          <span class="rprog-badge">▼ 5 kg desde inicio</span>
+          <span class="rprog-badge">▼ 7 cm cintura</span>
+          <span class="rprog-badge">IMC en rango normal</span>
+          <span style="background:var(--green-25);border:1px solid var(--green-200);border-radius:9999px;padding:3px 10px;font-size:11px;font-weight:600;color:var(--green-700)">A 5 kg de la meta</span>
+        </div>
+      </div>
+      <div class="rband">Motivación y asesoría personalizada</div>
+      <div class="rmotiv-wrap">
+        <div class="rmotiv-grid">
+          <div class="rmc-dark">
+            <div class="rmk-dark">Motivación principal</div>
+            <div class="rmv-dark">Bajar de peso y mejorar condición física para tener más energía en el trabajo.</div>
+            <div style="margin-top:10px"><div class="rmk-dark">Adherencia al plan</div><div class="rmv-dark">Alta — sigue el plan el 80% de los días, con dificultades los fines de semana por comidas familiares.</div></div>
+          </div>
+          <div class="rmc-light">
+            <div class="rmk-light">Asesoría personalizada</div>
+            <div class="rmv-light">Buena adherencia. Se recomienda aumentar consumo de agua a 3 L diarios y mantener actividad física. Para los fines de semana, hacer elecciones conscientes sin eliminar comidas familiares — el balance es clave.</div>
+            <div style="margin-top:8px"><div class="rmk-light">Observaciones clínicas</div><div class="rmv-light">El asma leve no limita la actividad física. Se sugiere llevar inhalador en caminatas largas.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="rband">Próxima cita</div>
+      <div style="padding:14px 32px 16px">
+        <div class="rnext-banner">
+          <div><div class="rnk">Fecha programada</div><div class="rnv">Lunes, 28 de Julio, 2026</div></div>
+          <div style="text-align:right">
+            <div style="font-size:11px;color:var(--green-500)">Nutricionista asignado</div>
+            <div style="font-size:13px;font-weight:600;color:white;margin-top:2px">Lic. Guillermo Alejandro Flores</div>
+            <div style="font-size:11px;color:var(--green-400);margin-top:4px">¡Sigue así, vas muy bien!</div>
+          </div>
+        </div>
+      </div>
+      <div class="rpage-footer">
+        <div class="rfoot-copy">Feel Better Nutrición · Portal Profesional · © 2026</div>
+        <div class="rfoot-conf"><div class="rfoot-dot"></div> Documento confidencial</div>
+        <div class="rfoot-page">Página 2 de 3</div>
+      </div>
+    </div>
+
+    <!-- PÁGINA 3 -->
+    <div class="rpage">
+      <div class="rpage-header">
+        <div class="rh-brand"><div class="rh-wordmark">Feel Better<span>.</span></div><div class="rh-tagline">Nutrición · Portal profesional</div></div>
+        <div class="rh-title">Resumen de cita</div>
+        <div class="rh-meta"><div class="rh-case">CASO #00000003</div><div class="rh-date">Jorge Gómez · 28 de Junio, 2026</div></div>
+      </div>
+      <div class="rband">Plan de alimentación semanal — julio 2026</div>
+      <div style="padding:12px 32px 8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <span class="rpill rpill-yes">Desayuno</span>
+        <span class="rpill rpill-teal">Almuerzo</span>
+        <span class="rpill" style="background:var(--green-100);color:var(--green-800)">Cena</span>
+        <span class="rpill rpill-warm">Meriendas</span>
+        <span style="font-size:11px;color:var(--ink-500);margin-left:4px">· Sin lactosa · Sin mariscos · 3 L de agua al día</span>
+      </div>
+      <div class="rplan-wrap">
+        <div class="rplan-grid">
+          <div class="rph"></div><div class="rph">Desayuno</div><div class="rph">Almuerzo</div><div class="rph">Cena</div><div class="rph">Meriendas</div>
+          <div class="rpday">LUNES</div>
+          <div class="rpcell">Avena con frutas y semillas de chía. Vaso de agua con limón.</div>
+          <div class="rpcell">Arroz integral, pechuga a la plancha con hierbas, ensalada verde con aceite de oliva.</div>
+          <div class="rpcell">Sopa de verduras, tortilla integral tostada.</div>
+          <div class="rpcell">Manzana verde, 10 nueces.</div>
+          <div class="rpday">MARTES</div>
+          <div class="rpcell">2 huevos revueltos con espinaca, pan integral, jugo de naranja natural.</div>
+          <div class="rpcell">Frijoles negros, 2 tortillas integrales, pollo asado, aguacate (½).</div>
+          <div class="rpcell">Ensalada de atún con tomate y pepino, pan integral.</div>
+          <div class="rpcell">Yogur de coco natural sin azúcar.</div>
+          <div class="rpday">MIÉRC.</div>
+          <div class="rpcell">Yogur de almendra con granola sin azúcar, berries mixtos.</div>
+          <div class="rpcell">Pasta integral con res a la plancha y brócoli al vapor con ajo.</div>
+          <div class="rpcell">Caldo de pollo con vegetales y fideos integrales.</div>
+          <div class="rpcell">Zanahoria con hummus de garbanzo.</div>
+          <div class="rpday">JUEVES</div>
+          <div class="rpcell">Avena con plátano maduro y miel natural, café negro.</div>
+          <div class="rpcell">Arroz integral, lentejas guisadas, pollo al horno con limón.</div>
+          <div class="rpcell">Sopa de frijoles, tortilla integral.</div>
+          <div class="rpcell">Pepino con limón y chile en polvo.</div>
+          <div class="rpday">VIERNES</div>
+          <div class="rpcell">Licuado de espinaca, mango, plátano y proteína de guisante.</div>
+          <div class="rpcell">Filete de pescado a la plancha, arroz integral, ensalada de tomate y cebolla.</div>
+          <div class="rpcell">Tacos de lechuga con pavo molido y salsa de tomate natural.</div>
+          <div class="rpcell">Fresas naturales (1 taza).</div>
+          <div class="rpday">SÁBADO</div>
+          <div class="rpcell">Panqueques de avena (2) con miel pura y plátano en rodajas.</div>
+          <div class="rpcell">Pollo a la naranja con arroz integral y vegetales salteados.</div>
+          <div class="rpcell">Pizza integral casera con vegetales y queso vegano, ensalada.</div>
+          <div class="rpcell">Palomitas de maíz sin mantequilla (1 taza).</div>
+          <div class="rpday">DOMINGO</div>
+          <div class="rpcell">Huevos benedictinos con pan integral y aguacate (sin holandesa).</div>
+          <div class="rpcell">Res estofada con vegetales, puré de papa natural. Elección consciente en familia.</div>
+          <div class="rpcell">Caldo tlalpeño light, tortilla integral.</div>
+          <div class="rpcell">Rebanada de melón o papaya.</div>
+        </div>
+        <div class="rplan-notes">
+          <div class="rpnote rpnote-green"><div class="rpnote-k">Hidratación</div><div class="rpnote-v">Mínimo <strong>3 L de agua</strong> al día. Comenzar cada mañana con un vaso de agua antes del desayuno.</div></div>
+          <div class="rpnote rpnote-green"><div class="rpnote-k">Recordatorio — sin lactosa</div><div class="rpnote-v">Sustituir lácteos por versiones vegetales (coco, almendra, avena). Revisar etiquetas de pan y embutidos.</div></div>
+          <div class="rpnote rpnote-teal"><div class="rpnote-k">Actividad física sugerida</div><div class="rpnote-v">Mantener caminatas 3x/semana. Subir a 4x en julio. Llevar inhalador en salidas largas.</div></div>
+        </div>
+      </div>
+      <div class="rpage-footer">
+        <div class="rfoot-copy">Feel Better Nutrición · Portal Profesional · © 2026</div>
+        <div class="rfoot-conf"><div class="rfoot-dot"></div> Documento confidencial</div>
+        <div class="rfoot-page">Página 3 de 3</div>
+      </div>
+    </div>
+
+  </div><!-- /resumen-pages -->
+</div><!-- /resumen-overlay -->
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i data-lucide="check-circle"></i>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+// ── WIZARD STEPS ──
+const steps = [
+  { label: 'Datos personales', icon: 'user', html: `
+    <div class="form-section">
+      <div class="form-section-title"><i data-lucide="user"></i> Datos personales del paciente</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">DUI</label><input class="form-input" value="04599254" placeholder="00000000"></div>
+        <div class="form-group"><label class="form-label">Primer nombre</label><input class="form-input" value="Jorge"></div>
+        <div class="form-group"><label class="form-label">Segundo nombre</label><input class="form-input" value="Orlando"></div>
+        <div class="form-group"><label class="form-label">Primer apellido</label><input class="form-input" value="Gómez"></div>
+        <div class="form-group"><label class="form-label">Segundo apellido</label><input class="form-input" value="Márquez"></div>
+        <div class="form-group"><label class="form-label">Fecha de nacimiento</label><input class="form-input" type="date" value="1992-07-11"></div>
+        <div class="form-group"><label class="form-label">Número de contacto</label><input class="form-input" value="2205-7777"></div>
+        <div class="form-group"><label class="form-label">Sexo</label><select class="form-select"><option>Masculino</option><option>Femenino</option></select></div>
+        <div class="form-group"><label class="form-label">Correo electrónico</label><input class="form-input" value="jorge@gmail.com" type="email"></div>
+        <div class="form-group"><label class="form-label">Estado civil</label><select class="form-select"><option>Soltero</option><option>Casado</option><option>Otro</option></select></div>
+      </div>
+    </div>` },
+  { label: 'Antecedentes', icon: 'file-heart', html: `
+    <div class="form-section">
+      <div class="form-section-title"><i data-lucide="file-heart"></i> Antecedentes de enfermedades</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">¿Ha padecido o padece alguna enfermedad crónica?</label><textarea class="form-textarea">No por el momento</textarea></div>
+        <div class="form-group full"><label class="form-label">¿Padece alguna otra enfermedad no crónica?</label><textarea class="form-textarea">Asma leve</textarea></div>
+        <div class="form-group full"><label class="form-label">¿Ha recibido o se encuentra recibiendo algún tratamiento médico?</label><textarea class="form-textarea">Terapias de oxígeno ocasionales</textarea></div>
+      </div>
+    </div>` },
+  { label: 'Estilo de vida', icon: 'heart-pulse', html: `
+    <div class="form-section">
+      <div class="form-section-title"><i data-lucide="heart-pulse"></i> Estilo de vida</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Rutina de sueño</label><textarea class="form-textarea" style="min-height:64px">Duerme entre 11 pm y 7 am, no definido</textarea></div>
+        <div class="form-group full"><label class="form-label">Actividad física</label><textarea class="form-textarea" style="min-height:64px">Moderada, caminatas dos a tres veces por semana</textarea></div>
+        <div class="form-group"><label class="form-label">Intolerancias alimentarias</label><input class="form-input" value="Intolerante a la lactosa"></div>
+        <div class="form-group"><label class="form-label">Alimentos que no le gustan</label><input class="form-input" value="No consume mariscos"></div>
+        <div class="form-group"><label class="form-label">¿Fuma?</label><div class="radio-group"><label class="radio-opt"><input type="radio" name="fuma" value="si"> Sí</label><label class="radio-opt"><input type="radio" name="fuma" value="no" checked> No</label></div></div>
+        <div class="form-group"><label class="form-label">¿Consume alcohol?</label><div class="radio-group"><label class="radio-opt"><input type="radio" name="alcohol" value="si" checked> Sí</label><label class="radio-opt"><input type="radio" name="alcohol" value="no"> No</label></div></div>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-section-title"><i data-lucide="utensils"></i> Dieta actual</div>
+      <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:1px;background:var(--green-200);border-radius:var(--r-md);overflow:hidden">
+        <div style="background:var(--green-25);padding:var(--s-2) var(--s-3);font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-500)"></div>
+        <div style="background:var(--green-25);padding:var(--s-2) var(--s-3);font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-500)">Días de semana</div>
+        <div style="background:var(--green-25);padding:var(--s-2) var(--s-3);font-size:11px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-500)">Fines de semana</div>
+        ${['Desayuno','Almuerzo','Cena','Refrigerios','Líquidos'].map(t=>`
+        <div style="background:var(--white);padding:10px var(--s-3);font-size:14px;font-weight:500;color:var(--ink-700);border-top:1px solid var(--ink-50)">${t}</div>
+        <div style="background:var(--white);padding:4px var(--s-2);border-top:1px solid var(--ink-50)"><input class="form-input" style="padding:8px 10px;font-size:13px" placeholder="Descripción..."></div>
+        <div style="background:var(--white);padding:4px var(--s-2);border-top:1px solid var(--ink-50)"><input class="form-input" style="padding:8px 10px;font-size:13px" placeholder="Descripción..."></div>`).join('')}
+      </div>
+    </div>` },
+  { label: 'Medidas y metas', icon: 'activity', html: `
+    <div class="form-section">
+      <div class="form-section-title"><i data-lucide="activity"></i> Estado actual y metas</div>
+      <div class="mfg">
+        <div class="mfg-h">Medida</div><div class="mfg-h">Meta</div><div class="mfg-h">Anterior</div><div class="mfg-h">Actual (hoy)</div>
+        ${[['Peso (kg)','85','94'],['Talla (m)','—','1,85'],['Cintura (cm)','80','92'],['Cadera (cm)','90','100'],['Brazo (cm)','30','33'],['Pecho (cm)','90','98'],['Muslo (cm)','50','56'],['IMC','—','27,4']].map(([l,m,a])=>`
+        <div class="mfg-label">${l}</div>
+        <div class="mfg-cell prev"><input value="${m}"></div>
+        <div class="mfg-cell prev"><input value="${a}" readonly></div>
+        <div class="mfg-cell"><input placeholder="Ingresar..."></div>`).join('')}
+      </div>
+      <div class="form-grid" style="margin-top:var(--s-4)">
+        <div class="form-group"><label class="form-label">Motivación principal</label><select class="form-select"><option>Bajar de peso</option><option>Mejorar salud</option><option>Ganar masa muscular</option></select></div>
+        <div class="form-group"><label class="form-label">Fecha próxima consulta</label><input class="form-input" type="date"></div>
+        <div class="form-group full"><label class="form-label">Asesoría personalizada</label><textarea class="form-textarea">El paciente reporta buena adherencia al plan. Se recomienda aumentar consumo de agua a 3 L diarios y mantener actividad física.</textarea></div>
+      </div>
+    </div>` },
+  { label: 'Plan alimenticio', icon: 'salad', html: `
+    <div class="form-section">
+      <div class="form-section-title"><i data-lucide="salad"></i> Plan de alimentación semanal</div>
+      <table class="plan-form-table">
+        <thead><tr><th></th><th>Desayuno</th><th>Almuerzo</th><th>Cena</th><th>Meriendas</th></tr></thead>
+        <tbody>
+          ${[['L','Avena con frutas y chía','Arroz integral, pechuga, ensalada','Sopa de verduras, tortilla','Manzana, nueces'],
+             ['Ma','Huevos revueltos, pan integral','Frijoles, pollo asado, aguacate','Ensalada de atún','Yogur natural'],
+             ['Mi','Yogur con granola','Pasta integral, res, brócoli','Caldo de pollo','Zanahoria con hummus'],
+             ['J','Avena con plátano','Arroz, lentejas, pollo al horno','Sopa de frijoles','Pepino con limón'],
+             ['V','Licuado verde con proteína','Pescado, arroz, ensalada','Tacos de lechuga','Fresas'],
+             ['S','Panqueques de avena','Pollo a la naranja, arroz','Pizza integral casera','Palomitas'],
+             ['D','Huevos con pan integral','Res estofada, puré de papa','Caldo tlalpeño','Melón']].map(([d,...v])=>
+          `<tr><td>${d}</td>${v.map(val=>`<td><input value="${val}" placeholder="Alimentos..."></td>`).join('')}</tr>`).join('')}
+        </tbody>
+      </table>
+    </div>` },
+  { label: 'Resumen', icon: 'check-circle', html: `
+    <div class="form-section">
+      <div class="form-section-title"><i data-lucide="check-circle"></i> Resumen de la consulta</div>
+      <div class="alert alert-success" style="margin-bottom:var(--s-5)">
+        <i data-lucide="check-circle"></i>
+        <span>La consulta está lista. Se enviará un resumen por correo a <strong>jorge@gmail.com</strong> y al nutricionista.</span>
+      </div>
+      <div class="grid-2">
+        <div style="background:var(--green-25);border-radius:var(--r-md);padding:var(--s-5)">
+          <p class="t-overline" style="margin-bottom:var(--s-3)">Datos del caso</p>
+          <div class="field-row"><div class="field-label">Caso N°</div><div class="field-value" style="font-family:monospace">00000004</div></div>
+          <div class="field-row"><div class="field-label">Fecha</div><div class="field-value">Lunes, 28 de Junio · 9:47 AM</div></div>
+          <div class="field-row"><div class="field-label">Profesional</div><div class="field-value">Guillermo Flores</div></div>
+          <div class="field-row"><div class="field-label">Paciente</div><div class="field-value">Jorge Gómez</div></div>
+        </div>
+        <div style="background:var(--green-700);border-radius:var(--r-md);padding:var(--s-5);position:relative;overflow:hidden">
+          <div style="position:absolute;width:120px;height:120px;border-radius:9999px;background:rgba(255,255,255,0.08);bottom:-30px;right:-30px"></div>
+          <p style="font-size:14px;font-weight:500;letter-spacing:.7px;text-transform:uppercase;color:var(--green-500);margin-bottom:var(--s-3)">Progreso</p>
+          <div class="field-row"><div class="field-label" style="color:rgba(255,255,255,.5)">Peso anterior</div><div class="field-value" style="color:white">94 kg</div></div>
+          <div class="field-row"><div class="field-label" style="color:rgba(255,255,255,.5)">Peso actual</div><div class="field-value" style="color:var(--green-400);font-weight:700">90 kg ▼ 4 kg</div></div>
+          <div class="field-row"><div class="field-label" style="color:rgba(255,255,255,.5)">Meta restante</div><div class="field-value" style="color:white">5 kg para 85 kg</div></div>
+          <div class="field-row"><div class="field-label" style="color:rgba(255,255,255,.5)">Próxima cita</div><div class="field-value" style="color:white">28 de julio, 2026</div></div>
+        </div>
+      </div>
+    </div>` }
+];
+
+let currentStep = 0;
+
+function renderWizard() {
+  const stEl = document.getElementById('wizardSteps');
+  stEl.innerHTML = steps.map((s,i) => {
+    const state = i < currentStep ? 'done' : i === currentStep ? 'current' : 'pending';
+    const icon = i < currentStep ? `<i data-lucide="check" style="width:13px;height:13px"></i>` : (i+1);
+    return `
+      <div class="wstep">
+        <div class="wstep-circle ${state}">${icon}</div>
+        <span class="wstep-label ${state}">${s.label}</span>
+      </div>
+      ${i < steps.length-1 ? `<div class="wstep-line ${i < currentStep ? 'done' : ''}"></div>` : ''}`;
+  }).join('');
+
+  document.getElementById('wizardContent').innerHTML = steps[currentStep].html;
+  document.getElementById('stepCounter').textContent = `Paso ${currentStep+1} de ${steps.length}`;
+  document.getElementById('btnPrev').style.display = currentStep > 0 ? 'inline-flex' : 'none';
+
+  const btnNext = document.getElementById('btnNext');
+  if (currentStep === steps.length - 1) {
+    btnNext.innerHTML = `<i data-lucide="check"></i> Finalizar y enviar`;
+  } else {
+    btnNext.innerHTML = `Continuar <i data-lucide="arrow-right"></i>`;
+  }
+  lucide.createIcons();
+  window.scrollTo(0,0);
+}
+
+function wizardNext() {
+  if (currentStep < steps.length - 1) { currentStep++; renderWizard(); }
+  else { finalizarConsulta(); }
+}
+function wizardPrev() {
+  if (currentStep > 0) { currentStep--; renderWizard(); }
+}
+function finalizarConsulta() {
+  showToast('¡Consulta finalizada! Resumen enviado por correo.');
+  setTimeout(() => { currentStep = 0; openResumen(); }, 1400);
+}
+
+function openResumen() {
+  document.getElementById('resumenOverlay').classList.add('active');
+  document.getElementById('resumenOverlay').scrollTop = 0;
+  lucide.createIcons();
+}
+
+function closeResumen() {
+  document.getElementById('resumenOverlay').classList.remove('active');
+  showExpediente();
+}
+
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  if (id === 'nueva') { currentStep = 0; renderWizard(); }
+  window.scrollTo(0,0);
+}
+
+function showExpediente() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-expediente').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item')[1].classList.add('active');
+  // reset tabs
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tc-medidas').classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.tab').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function switchTab(tcId, tabEl) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById(tcId).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+function filterClients(val) {
+  document.querySelectorAll('#clientList .list-row').forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(val.toLowerCase()) ? '' : 'none';
+  });
+}
+
+// Init
+lucide.createIcons();
+</script>
 </body>
 </html>
