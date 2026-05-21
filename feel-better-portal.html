@@ -8,7 +8,6 @@
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
 
-/* ─── ROUTER GLOBAL ─── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
@@ -19,13 +18,10 @@ body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
 .back-btn{
   position:fixed;top:16px;left:16px;z-index:9999;
   background:rgba(21,66,18,.92);backdrop-filter:blur(12px);
-  color:#BCF0AE;border:1px solid rgba(188,240,174,.2);
-  border-radius:9999px;padding:8px 16px;
+  color:#BCF0AE;border:none;border-radius:9999px;padding:8px 16px;
   font-family:'Inter';font-size:13px;font-weight:600;
   cursor:pointer;display:none;align-items:center;gap:8px;
-  box-shadow:0 4px 16px rgba(0,0,0,.3);
-  transition:all 150ms cubic-bezier(.2,0,0,1);
-  border:none;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);transition:all 150ms cubic-bezier(.2,0,0,1);
 }
 .back-btn:hover{background:rgba(45,90,39,.95);}
 .back-btn i{width:15px;height:15px;}
@@ -36,7 +32,6 @@ body{font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
 .anim-right{animation:slideRight 250ms cubic-bezier(.2,0,0,1);}
 .anim-up{animation:slideUp 250ms cubic-bezier(.2,0,0,1);}
 
-/* ─── INDEX ─── */
 #view-index{background:#154212;overflow-y:auto;}
 
 :root {
@@ -156,7 +151,6 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:24px 40px;display:flex
 }
 
 
-/* ─── PORTAL ─── */
 #view-portal{position:relative;overflow:hidden;}
 #view-portal .sidebar{position:absolute;height:100%;}
 #view-portal .main{min-height:100vh;}
@@ -904,7 +898,6 @@ body {
 }
 
 
-/* ─── APP ─── */
 #view-app{background:#1a1a1a;align-items:center;justify-content:flex-start;overflow-y:auto;padding:24px 16px 40px;}
 
 :root {
@@ -1144,7 +1137,6 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
   <i data-lucide="arrow-left"></i> Volver al inicio
 </button>
 
-<!-- INDEX -->
 <div class="view active" id="view-index">
 
 
@@ -1292,7 +1284,6 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
 
 </div>
 
-<!-- PORTAL -->
 <div class="view" id="view-portal">
 
 
@@ -1972,7 +1963,6 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
 
 </div>
 
-<!-- APP -->
 <div class="view" id="view-app">
 
 
@@ -2513,33 +2503,22 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
 </div>
 
 <script>
-/* ════════════════════════════
-   ROUTER
-════════════════════════════ */
 function switchView(name) {
-  document.querySelectorAll('.view').forEach(v => {
+  document.querySelectorAll('.view').forEach(function(v){
     v.classList.remove('active','anim-right','anim-up');
   });
-  const target = document.getElementById('view-' + name);
+  var target = document.getElementById('view-' + name);
   target.classList.add('active');
-  if (name === 'portal') { target.classList.add('anim-right'); initPortal(); }
-  if (name === 'app')    { target.classList.add('anim-up');    initApp(); }
-  const btn = document.getElementById('backBtn');
-  btn.classList.toggle('visible', name !== 'index');
-  lucide.createIcons();
+  if (name === 'portal') { target.classList.add('anim-right'); }
+  if (name === 'app')    { target.classList.add('anim-up'); }
+  document.getElementById('backBtn').classList.toggle('visible', name !== 'index');
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-/* ════════════════════════════
-   PORTAL
-════════════════════════════ */
-let _portalReady = false;
-function initPortal() {
-  if (_portalReady) { lucide.createIcons(); return; }
-  _portalReady = true;
-
+/* ════ PORTAL FUNCTIONS (global) ════ */
 
 // ── WIZARD STEPS ──
-const steps = [
+const portalSteps = [
   { label: 'Datos personales', icon: 'user', html: `
     <div class="form-section">
       <div class="form-section-title"><i data-lucide="user"></i> Datos personales del paciente</div>
@@ -2650,27 +2629,27 @@ const steps = [
     </div>` }
 ];
 
-let currentStep = 0;
+let portalCurrentStep = 0;
 
 function renderWizard() {
   const stEl = document.getElementById('wizardSteps');
-  stEl.innerHTML = steps.map((s,i) => {
-    const state = i < currentStep ? 'done' : i === currentStep ? 'current' : 'pending';
-    const icon = i < currentStep ? `<i data-lucide="check" style="width:13px;height:13px"></i>` : (i+1);
+  stEl.innerHTML = portalSteps.map((s,i) => {
+    const state = i < portalCurrentStep ? 'done' : i === portalCurrentStep ? 'current' : 'pending';
+    const icon = i < portalCurrentStep ? `<i data-lucide="check" style="width:13px;height:13px"></i>` : (i+1);
     return `
       <div class="wstep">
         <div class="wstep-circle ${state}">${icon}</div>
         <span class="wstep-label ${state}">${s.label}</span>
       </div>
-      ${i < steps.length-1 ? `<div class="wstep-line ${i < currentStep ? 'done' : ''}"></div>` : ''}`;
+      ${i < portalSteps.length-1 ? `<div class="wstep-line ${i < portalCurrentStep ? 'done' : ''}"></div>` : ''}`;
   }).join('');
 
-  document.getElementById('wizardContent').innerHTML = steps[currentStep].html;
-  document.getElementById('stepCounter').textContent = `Paso ${currentStep+1} de ${steps.length}`;
-  document.getElementById('btnPrev').style.display = currentStep > 0 ? 'inline-flex' : 'none';
+  document.getElementById('wizardContent').innerHTML = portalSteps[portalCurrentStep].html;
+  document.getElementById('stepCounter').textContent = `Paso ${portalCurrentStep+1} de ${portalSteps.length}`;
+  document.getElementById('btnPrev').style.display = portalCurrentStep > 0 ? 'inline-flex' : 'none';
 
   const btnNext = document.getElementById('btnNext');
-  if (currentStep === steps.length - 1) {
+  if (portalCurrentStep === portalSteps.length - 1) {
     btnNext.innerHTML = `<i data-lucide="check"></i> Finalizar y enviar`;
   } else {
     btnNext.innerHTML = `Continuar <i data-lucide="arrow-right"></i>`;
@@ -2680,15 +2659,15 @@ function renderWizard() {
 }
 
 function portalWizardNext() {
-  if (currentStep < steps.length - 1) { currentStep++; renderWizard(); }
+  if (portalCurrentStep < portalSteps.length - 1) { portalCurrentStep++; renderWizard(); }
   else { portalFinalizarConsulta(); }
 }
 function portalWizardPrev() {
-  if (currentStep > 0) { currentStep--; renderWizard(); }
+  if (portalCurrentStep > 0) { portalCurrentStep--; renderWizard(); }
 }
 function portalFinalizarConsulta() {
   portalToast('¡Consulta finalizada! Resumen enviado por correo.');
-  setTimeout(() => { currentStep = 0; portalOpenResumen(); }, 1400);
+  setTimeout(() => { portalCurrentStep = 0; portalOpenResumen(); }, 1400);
 }
 
 function portalOpenResumen() {
@@ -2707,7 +2686,7 @@ function portalShowPage(id, navEl) {
   document.getElementById('page-' + id).classList.add('active');
   document.querySelectorAll('#view-portal .nav-item').forEach(n => n.classList.remove('active'));
   if (navEl) navEl.classList.add('active');
-  if (id === 'nueva') { currentStep = 0; renderWizard(); }
+  if (id === 'nueva') { portalCurrentStep = 0; renderWizard(); }
   window.scrollTo(0,0);
 }
 
@@ -2731,13 +2710,13 @@ function portalSwitchTab(tcId, tabEl) {
   tabEl.classList.add('active');
 }
 
-let toastTimer;
+let portalToastTimer;
 function portalToast(msg) {
   const t = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
   t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+  clearTimeout(portalToastTimer);
+  portalToastTimer = setTimeout(() => t.classList.remove('show'), 3200);
 }
 
 function portalFilterClients(val) {
@@ -2746,21 +2725,7 @@ function portalFilterClients(val) {
   });
 }
 
-// Init
-lucide.createIcons();
-
-
-  lucide.createIcons();
-}
-
-/* ════════════════════════════
-   APP
-════════════════════════════ */
-let _appReady = false;
-function initApp() {
-  if (_appReady) { lucide.createIcons(); return; }
-  _appReady = true;
-
+/* ════ APP FUNCTIONS (global) ════ */
 
 function appShowScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -2775,26 +2740,26 @@ function appToggleCheck(el) {
   lucide.createIcons();
 }  // end initApp
 
-let aguaUnits = 7;
+let appAguaUnits = 7;
 function appCambiarAgua(delta) {
-  aguaUnits = Math.max(0, Math.min(12, aguaUnits + delta));
-  const litros = (aguaUnits * 0.25).toFixed(1).replace('.', ',');
-  const pct = Math.round((aguaUnits / 12) * 100);
+  appAguaUnits = Math.max(0, Math.min(12, appAguaUnits + delta));
+  const litros = (appAguaUnits * 0.25).toFixed(1).replace('.', ',');
+  const pct = Math.round((appAguaUnits / 12) * 100);
   document.getElementById('aguaVal').textContent = litros;
   document.getElementById('aguaBar').style.width = pct + '%';
   const dots = document.querySelectorAll('#aguaDots .agua-dot');
-  const filled = Math.floor(aguaUnits * (10 / 12));
+  const filled = Math.floor(appAguaUnits * (10 / 12));
   dots.forEach((d, i) => d.classList.toggle('filled', i < filled));
-  if (aguaUnits >= 12) appToast('¡Meta de hidratación alcanzada!');
+  if (appAguaUnits >= 12) appToast('¡Meta de hidratación alcanzada!');
 }
 
-let toastTimer;
+let appToastTimer;
 function appToast(msg) {
   const t = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
   t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+  clearTimeout(appToastTimer);
+  appToastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
 
 function appSendMsg(e) {
@@ -2827,15 +2792,7 @@ function appSendChatMsg() {
   }, 1200);
 }
 
-lucide.createIcons();
-
-
-  lucide.createIcons();
-}
-
-/* ════════════════════════════
-   BOOT
-════════════════════════════ */
+/* ════ BOOT ════ */
 lucide.createIcons();
 </script>
 </body>
