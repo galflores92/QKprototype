@@ -897,6 +897,46 @@ body {
   @page { size: Letter; margin: 0; }
 }
 
+/* ─── MODALES ─── */
+.modal-backdrop {
+  display: none;
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(21,28,24,0.55);
+  backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  align-items: center; justify-content: center;
+  padding: 24px;
+  animation: modalFade 200ms cubic-bezier(0.2,0,0,1);
+}
+.modal-backdrop.active { display: flex; }
+@keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
+.modal-box {
+  background: var(--white); border-radius: var(--r-xl);
+  padding: var(--s-6); max-width: 420px; width: 100%;
+  box-shadow: var(--shadow-pop); text-align: center;
+  animation: modalPop 250ms cubic-bezier(0.2,0,0,1);
+}
+.modal-box-lg { max-width: 560px; text-align: left; }
+@keyframes modalPop { from { opacity: 0; transform: scale(0.94) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-icon {
+  width: 56px; height: 56px; border-radius: var(--r-pill);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto var(--s-4);
+}
+.modal-icon.warning { background: #FFF8E7; }
+.modal-icon.warning i { width: 28px; height: 28px; color: var(--warning); }
+.modal-title { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: var(--green-950); margin-bottom: var(--s-2); }
+.modal-text { font-size: 14px; color: var(--ink-500); line-height: 1.6; margin-bottom: var(--s-5); }
+.modal-text strong { color: var(--ink-900); font-weight: 600; }
+.modal-actions { display: flex; gap: var(--s-2); justify-content: center; }
+.modal-actions .btn { flex: 1; justify-content: center; }
+.modal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--s-5); }
+.modal-close { width: 32px; height: 32px; border-radius: var(--r-pill); background: var(--ink-100); display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: background 150ms; }
+.modal-close:hover { background: var(--ink-200); }
+.modal-close i { width: 16px; height: 16px; color: var(--ink-500); }
+.modal-form { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); margin-bottom: var(--s-5); }
+.modal-form .form-group { display: flex; flex-direction: column; }
+.modal-form .form-group.full { grid-column: 1 / -1; }
+
 
 #view-app{background:#1a1a1a;align-items:center;justify-content:flex-start;overflow-y:auto;padding:24px 16px 40px;}
 
@@ -1304,9 +1344,6 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
       <i data-lucide="users"></i> Pacientes
       <span class="nav-badge">24</span>
     </div>
-    <div class="nav-item" onclick="portalShowPage('nueva',this)">
-      <i data-lucide="plus-circle"></i> Nueva consulta
-    </div>
     <div class="nav-section">Herramientas</div>
     <div class="nav-item" onclick="portalShowPage('agenda',this)">
       <i data-lucide="calendar"></i> Agenda
@@ -1340,11 +1377,11 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
   <div class="topbar">
     <div class="topbar-title">¡Hola, Guillermo!</div>
     <div style="display:flex;gap:var(--s-2)">
-      <button class="btn btn-secondary btn-sm" onclick="portalShowPage('clientes',document.querySelectorAll('.nav-item')[1])">
+      <button class="btn btn-secondary btn-sm" onclick="portalShowPage('clientes',document.querySelectorAll('#view-portal .nav-item')[1])">
         <i data-lucide="search"></i> Buscar paciente
       </button>
-      <button class="btn btn-primary btn-sm" onclick="portalShowPage('nueva',document.querySelectorAll('.nav-item')[2])">
-        <i data-lucide="plus"></i> Nueva consulta
+      <button class="btn btn-primary btn-sm" onclick="portalAgregarPaciente()">
+        <i data-lucide="user-plus"></i> Agregar paciente
       </button>
     </div>
   </div>
@@ -1456,8 +1493,8 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
 <div id="page-clientes" class="page">
   <div class="topbar">
     <div class="topbar-title">Pacientes</div>
-    <button class="btn btn-primary btn-sm" onclick="portalShowPage('nueva',document.querySelectorAll('.nav-item')[2])">
-      <i data-lucide="plus"></i> Nueva consulta
+    <button class="btn btn-primary btn-sm" onclick="portalAgregarPaciente()">
+      <i data-lucide="user-plus"></i> Agregar paciente
     </button>
   </div>
   <div class="content">
@@ -1468,10 +1505,13 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
       <div class="search-box">
         <div class="search-input-wrap">
           <i data-lucide="search"></i>
-          <input class="search-field" placeholder="DUI o nombre del paciente..." id="searchInput" oninput="portalFilterClients(this.value)">
+          <input class="search-field" placeholder="DUI o nombre del paciente..." id="searchInput" oninput="portalFilterClients(this.value)" onkeydown="portalSearchKey(event)">
         </div>
-        <button class="btn btn-primary" onclick="portalShowExpediente()">Buscar</button>
+        <button class="btn btn-primary" onclick="portalBuscarPaciente()">Buscar</button>
       </div>
+      <button class="btn btn-secondary btn-sm" style="margin-top:var(--s-4)" onclick="portalAgregarPaciente()">
+        <i data-lucide="user-plus"></i> Agregar paciente nuevo
+      </button>
     </div>
     <div class="card">
       <div class="card-header">
@@ -1517,7 +1557,7 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
       <button class="btn btn-secondary btn-sm" onclick="portalOpenResumen()">
         <i data-lucide="mail"></i> Enviar resumen
       </button>
-      <button class="btn btn-primary btn-sm" onclick="portalShowPage('nueva',document.querySelectorAll('.nav-item')[2])">
+      <button class="btn btn-primary btn-sm" onclick="portalShowPage('nueva',null)">
         <i data-lucide="plus"></i> Nueva consulta
       </button>
     </div>
@@ -1953,6 +1993,51 @@ body{font-family:'Inter',sans-serif;background:#1a1a1a;display:flex;flex-directi
 
   </div><!-- /resumen-pages -->
 </div><!-- /resumen-overlay -->
+
+<!-- ══ MODAL: PACIENTE NO ENCONTRADO ══ -->
+<div class="modal-backdrop" id="modalNotFound">
+  <div class="modal-box">
+    <div class="modal-icon warning">
+      <i data-lucide="user-x"></i>
+    </div>
+    <h3 class="modal-title">Paciente no encontrado</h3>
+    <p class="modal-text">No existe ningún paciente registrado con <strong id="notFoundQuery">ese dato</strong>. ¿Deseas crear un paciente nuevo?</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="portalCloseModal('modalNotFound')">Cancelar</button>
+      <button class="btn btn-primary" onclick="portalCloseModal('modalNotFound');portalAgregarPaciente()">
+        <i data-lucide="user-plus"></i> Crear paciente nuevo
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: AGREGAR PACIENTE ══ -->
+<div class="modal-backdrop" id="modalAddPatient">
+  <div class="modal-box modal-box-lg">
+    <div class="modal-header">
+      <div>
+        <h3 class="modal-title" style="text-align:left">Nuevo paciente</h3>
+        <p class="modal-text" style="text-align:left;margin:0">Ingresa los datos básicos del paciente</p>
+      </div>
+      <div class="modal-close" onclick="portalCloseModal('modalAddPatient')"><i data-lucide="x"></i></div>
+    </div>
+    <div class="modal-form">
+      <div class="form-group"><label class="form-label">DUI</label><input class="form-input" id="np-dui" placeholder="00000000"></div>
+      <div class="form-group"><label class="form-label">Primer nombre</label><input class="form-input" id="np-nombre" placeholder="Ej: Ana"></div>
+      <div class="form-group"><label class="form-label">Primer apellido</label><input class="form-input" id="np-apellido" placeholder="Ej: Martínez"></div>
+      <div class="form-group"><label class="form-label">Fecha de nacimiento</label><input class="form-input" type="date"></div>
+      <div class="form-group"><label class="form-label">Número de contacto</label><input class="form-input" placeholder="0000-0000"></div>
+      <div class="form-group"><label class="form-label">Sexo</label><select class="form-select"><option>Femenino</option><option>Masculino</option></select></div>
+      <div class="form-group full"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" placeholder="paciente@correo.com"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="portalCloseModal('modalAddPatient')">Cancelar</button>
+      <button class="btn btn-primary" onclick="portalGuardarPaciente()">
+        <i data-lucide="check"></i> Crear y abrir expediente
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- TOAST -->
 <div class="toast" id="toast">
@@ -2723,6 +2808,48 @@ function portalFilterClients(val) {
   document.querySelectorAll('#clientList .list-row').forEach(r => {
     r.style.display = r.textContent.toLowerCase().includes(val.toLowerCase()) ? '' : 'none';
   });
+}
+
+/* ── Búsqueda de paciente con validación ── */
+function portalSearchKey(e) {
+  if (e.key === 'Enter') portalBuscarPaciente();
+}
+
+function portalBuscarPaciente() {
+  const input = document.getElementById('searchInput');
+  const val = (input.value || '').trim().toLowerCase();
+  if (!val) { portalToast('Ingresa un DUI o nombre para buscar'); return; }
+
+  // Pacientes existentes en el prototipo (demo)
+  const pacientes = ['jorge','gómez','gomez','04599254','maría','maria','garcía','garcia','07823419','rosa','lópez','lopez','03241788','carlos','mendoza','09182734','ana','sánchez','sanchez','05674321'];
+  const existe = pacientes.some(p => p.includes(val) || val.includes(p));
+
+  if (existe) {
+    portalShowExpediente();
+  } else {
+    document.getElementById('notFoundQuery').textContent = '"' + input.value.trim() + '"';
+    portalOpenModal('modalNotFound');
+  }
+}
+
+/* ── Modales ── */
+function portalOpenModal(id) {
+  document.getElementById(id).classList.add('active');
+  lucide.createIcons();
+}
+function portalCloseModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+function portalAgregarPaciente() {
+  portalOpenModal('modalAddPatient');
+}
+function portalGuardarPaciente() {
+  const nombre = (document.getElementById('np-nombre').value || '').trim();
+  const apellido = (document.getElementById('np-apellido').value || '').trim();
+  portalCloseModal('modalAddPatient');
+  const nombreCompleto = (nombre || apellido) ? (nombre + ' ' + apellido).trim() : 'el nuevo paciente';
+  portalToast('Paciente ' + nombreCompleto + ' creado correctamente');
+  setTimeout(() => portalShowExpediente(), 900);
 }
 
 /* ════ APP FUNCTIONS (global) ════ */
